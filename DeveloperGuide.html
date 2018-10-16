@@ -813,8 +813,8 @@ To do so we adhere to PADI&#8217;s dive charts. These charts provide a lookup ta
 their current pressure group. The underlying implementation for these charts can be found in the <code>PadiDiveTable</code> class.
 A such the dive tales are stored in the <code>resources</code> folder as JSON files. They are loaded using the <code>DiveTableUtil</code> class
 via the FASTXML Jackson library. The <code>PadiDiveTable</code> itself is a singleton class. This choice was made as it makes sense to
-load the Dive Tables only once at the stat into memory (altough in its current form it is not the case). An example
-interaction with <code>PadiDiveTable</code> and <code>DiveTableUtil</code> can be fond in he sequence diagram below:</p>
+load the Dive Tables only once at the stat into memory (although in its current form it is not the case). An example
+interaction with <code>PadiDiveTable</code> and <code>DiveTableUtil</code> can be found in the sequence diagram below:</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -843,7 +843,7 @@ interaction with <code>PadiDiveTable</code> and <code>DiveTableUtil</code> can b
 <p>Pros: Easy to change data within tables.</p>
 </li>
 <li>
-<p>Cons: May have performance issues if the tables ar too large as it reads from disk.</p>
+<p>Cons: May have performance issues if the tables are too large as it reads from disk.</p>
 </li>
 </ul>
 </div>
@@ -853,7 +853,7 @@ interaction with <code>PadiDiveTable</code> and <code>DiveTableUtil</code> can b
 <div class="ulist">
 <ul>
 <li>
-<p>Pros: Have mildly smaller impact on performance as ata is loaded into memory at start up.</p>
+<p>Pros: Have mildly smaller impact on performance as data is loaded into memory at start up.</p>
 </li>
 <li>
 <p>Cons: Very tedious to implement, results in unreadable code.</p>
@@ -873,7 +873,7 @@ interaction with <code>PadiDiveTable</code> and <code>DiveTableUtil</code> can b
 <div class="ulist">
 <ul>
 <li>
-<p>Pros: It is possible to read the fileonly once and the memory used by te objects will only exist in one place.
+<p>Pros: It is possible to read the file only once and the memory used by the objects will only exist in one place.
 This saves both memory and disc writes.</p>
 </li>
 <li>
@@ -883,7 +883,7 @@ This saves both memory and disc writes.</p>
 </div>
 </li>
 <li>
-<p><strong>Altenative 2: </strong> Just use <code>PADIDiveTable</code> standard clases</p>
+<p><strong>Alternative 2: </strong> Just use <code>PADIDiveTable</code> standard classes</p>
 <div class="ulist">
 <ul>
 <li>
@@ -906,7 +906,7 @@ This saves both memory and disc writes.</p>
 <p>At its heart, the application is a divelog. The source code for this application was adopted from an addressbook application.
 The main implementation consideration was to minimize the number of changes in the existing addressbook class. At its heart
 the Dive Log uses the Model which is described in (See <a href="#Design-Model">Section 3.4, &#8220;Model component&#8221;</a>). The overall flow for command execution is similar
-to the case of undo. For additions, additions are made to the model, which is eventually commited to storage.
+to the case of undo. For additions, additions are made to the model, which is eventually committed to storage.
 An overall sequence diagram is as follows:</p>
 </div>
 </div>
@@ -2620,4 +2620,4 @@ This method returns a long type of length 12, in the format of <em>[DDMMYYYYHHMM
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-10-16 17:36:04 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-10-16 18:02:09 UTC</div></div></div></body></html>
