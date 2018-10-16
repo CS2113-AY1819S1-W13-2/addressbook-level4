@@ -1331,6 +1331,31 @@ These instructions only provide a starting point for testers to work on; testers
 <p class="tableblock">. Dealing with missing/corrupted data files</p>
 <p class="tableblock">.. <em>{explain how to simulate a missing/corrupted file and the expected behavior}</em></p>
 <p class="tableblock"><em>{ more test cases &#8230;&#8203; }</em></p>
+<p class="tableblock">/*
+*below is for later&#8217;s edit
+*/</p>
+<p class="tableblock">=== New Parameters in DiveSession
+==== ourDate (Date Start/ Date End)
+The ourDate Class consist of a String. When using the <code>add</code> or <code>edit</code> feature, the inputs will be parsed and checked to be a 8 digit String, in the format of <em>[DDMMYYYY]</em> through <code>ParserUtils</code>. Only Integers will be accepted.</p>
+<p class="tableblock">Date Start and Date End will have prefixes <code>ds/</code> and <code>de/</code> respectively, and these prefixes will be used when using the <code>add</code> or <code>edit</code> feature.</p>
+<p class="tableblock">==== Timezone
+The timeZone class consists of a Integer (ranging from -12 to +12). This interger is dependant on the user input, which is the timezone in the format of UTC. If there are no intergers in this string, there will be an exception thrown.</p>
+<p class="tableblock">Timezone will have prefix <code>tz/</code> which will be used when using the <code>add</code> or <code>edit</code> feature.</p>
+<p class="tableblock">=== Automatic Calculation of Pressue Group
+Takes into account the latest (in terms of time) Dive Session. Subtracting the current time from the latest dive, the method will be able to automatically calculate time until the current Pressure group will fall to the next group, which is the time until it is safe to dive again.</p>
+<p class="tableblock">==== Pressure Group
+Pressure group utilises a 3d Array in the form of <code>hashmap&lt;int, hashmap&lt;string, string&gt;&gt;</code>.
+Pressure groups range from A to Z. (i anyhow).</p>
+<p class="tableblock">==== CompareUtils
+CompareUtils is a helper method class implemented to assist with the automatic calculations of <code>PressureGroup</code></p>
+<p class="tableblock">The current methods in this Class include:</p>
+<p class="tableblock">* <code>checkTimeDifference()</code>&#8201;&#8212;&#8201;When 2 ourDate Strings and 2 time Strings parameters are passed, the method will return the time difference in number of minutes. This will be used in calculations</p>
+<p class="tableblock">* <code>convertTimetoLocal()</code>&#8201;&#8212;&#8201;This method uses the new <code>timeZone</code> parameter in DiveSession to convert any time to local time, based on the timeZone value (in UTC).
+This method returns a long type of length 12, in the format of <em>[DDMMYYYYHHMM]</em>.</p>
+<p class="tableblock">* <code>getCurrentDateTime()</code>&#8201;&#8212;&#8201;This method returns the current time in <code>Date</code> format
+* <code>getCurrentDateTimeLong()</code>&#8201;&#8212;&#8201;This method returns the current time in <code>long</code> format, in <em>[DDMMYYYYHHMM]</em>
+* <code>readTimeFromLong</code>&#8201;&#8212;&#8201;This method
+* <code>readDateFromLong()</code>&#8201;&#8212;&#8201;This method</p>
 <p class="tableblock">== PROJECT: PowerPointLabs</p>
 <p class="tableblock">---</p>
 <p class="tableblock"><em>{Optionally, you may include other projects in your portfolio.}</em></p></td>
@@ -1338,4 +1363,4 @@ These instructions only provide a starting point for testers to work on; testers
 </tbody>
 </table>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-10-16 05:45:44 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-10-16 06:19:55 UTC</div></div></div></body></html>
