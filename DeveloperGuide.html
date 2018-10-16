@@ -31,9 +31,10 @@
 <li><a href="#implementation">4. Implementation</a>
 <ul class="sectlevel2">
 <li><a href="#undo-redo-feature">4.1. Undo/Redo feature</a></li>
-<li><a href="#proposed-data-encryption">4.2. [Proposed] Data Encryption</a></li>
-<li><a href="#logging">4.3. Logging</a></li>
-<li><a href="#Implementation-Configuration">4.4. Configuration</a></li>
+<li><a href="#crud-for-code-divesession-code-objects">4.2. CRUD for <code>DiveSession</code> objects</a></li>
+<li><a href="#consistency-checks-for-diving-and-retaining-order-todo">4.3. Consistency Checks For Diving And Retaining Order [TODO]</a></li>
+<li><a href="#logging">4.4. Logging</a></li>
+<li><a href="#Implementation-Configuration">4.5. Configuration</a></li>
 </ul>
 </li>
 <li><a href="#documentation">5. Documentation</a>
@@ -83,7 +84,7 @@
 <li><a href="#instructions-for-manual-testing">Appendix H: Instructions for Manual Testing</a>
 <ul class="sectlevel2">
 <li><a href="#launch-and-shutdown">H.1. Launch and Shutdown</a></li>
-<li><a href="#deleting-a-person">H.2. Deleting a person</a></li>
+<li><a href="#deleting-a-divesession">H.2. Deleting a diveSession</a></li>
 <li><a href="#saving-data">H.3. Saving data</a></li>
 </ul>
 </li>
@@ -498,7 +499,7 @@ Note how the event is propagated through the <code>EventsCenter</code> to the <c
 <p>This results in a <code>Command</code> object which is executed by the <code>LogicManager</code>.</p>
 </li>
 <li>
-<p>The command execution can affect the <code>Model</code> (e.g. adding a person) and/or raise events.</p>
+<p>The command execution can affect the <code>Model</code> (e.g. adding a diveSession) and/or raise events.</p>
 </li>
 <li>
 <p>The result of the command execution is encapsulated as a <code>CommandResult</code> object which is passed back to the <code>Ui</code>.</p>
@@ -535,29 +536,20 @@ Note how the event is propagated through the <code>EventsCenter</code> to the <c
 <p>stores a <code>UserPref</code> object that represents the user&#8217;s preferences.</p>
 </li>
 <li>
-<p>stores the Address Book data.</p>
+<p>stores the DiveLog data.</p>
 </li>
 <li>
-<p>exposes an unmodifiable <code>ObservableList&lt;Person&gt;</code> that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.</p>
+<p>exposes an unmodifiable <code>ObservableList&lt;DiveSession&gt;</code> that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.</p>
 </li>
 <li>
 <p>does not depend on any of the other three components.</p>
 </li>
 </ul>
 </div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-As a more OOP model, we can store a <code>Tag</code> list in <code>Address Book</code>, which <code>Person</code> can reference. This would allow <code>Address Book</code> to only require one <code>Tag</code> object per unique <code>Tag</code>, instead of each <code>Person</code> needing their own <code>Tag</code> object. An example of how such a model may look like is given below.<br>
-<br>
-<span class="image"><img src="images/ModelClassBetterOopDiagram.png" alt="ModelClassBetterOopDiagram" width="800"></span>
-</td>
-</tr>
-</table>
+<div class="paragraph">
+<p>Some choices made here include the encapsulation of even simple values such as depth which is stored as a <code>DepthProfile</code> object.
+By doing so suppose we want to extend Depth to support complex dives with multiple depths or different units, we can simply update
+<code>DepthProfile</code> without breaking existing code.</p>
 </div>
 </div>
 <div class="sect2">
@@ -636,7 +628,7 @@ Additionally, it implements the following operations:</p>
 </div>
 </div>
 <div class="paragraph">
-<p>Step 2. The user executes <code>delete 5</code> command to delete the 5th person in the address book. The <code>delete</code> command calls <code>Model#commitAddressBook()</code>, causing the modified state of the address book after the <code>delete 5</code> command executes to be saved in the <code>addressBookStateList</code>, and the <code>currentStatePointer</code> is shifted to the newly inserted address book state.</p>
+<p>Step 2. The user executes <code>delete 5</code> command to delete the 5th diveSession in the address book. The <code>delete</code> command calls <code>Model#commitAddressBook()</code>, causing the modified state of the address book after the <code>delete 5</code> command executes to be saved in the <code>addressBookStateList</code>, and the <code>currentStatePointer</code> is shifted to the newly inserted address book state.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -644,7 +636,7 @@ Additionally, it implements the following operations:</p>
 </div>
 </div>
 <div class="paragraph">
-<p>Step 3. The user executes <code>add n/David &#8230;&#8203;</code> to add a new person. The <code>add</code> command also calls <code>Model#commitAddressBook()</code>, causing another modified address book state to be saved into the <code>addressBookStateList</code>.</p>
+<p>Step 3. The user executes <code>add n/David &#8230;&#8203;</code> to add a new diveSession. The <code>add</code> command also calls <code>Model#commitAddressBook()</code>, causing another modified address book state to be saved into the <code>addressBookStateList</code>.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -664,7 +656,7 @@ If a command fails its execution, it will not call <code>Model#commitAddressBook
 </table>
 </div>
 <div class="paragraph">
-<p>Step 4. The user now decides that adding the person was a mistake, and decides to undo that action by executing the <code>undo</code> command. The <code>undo</code> command will call <code>Model#undoAddressBook()</code>, which will shift the <code>currentStatePointer</code> once to the left, pointing it to the previous address book state, and restores the address book to that state.</p>
+<p>Step 4. The user now decides that adding the diveSession was a mistake, and decides to undo that action by executing the <code>undo</code> command. The <code>undo</code> command will call <code>Model#undoAddressBook()</code>, which will shift the <code>currentStatePointer</code> once to the left, pointing it to the previous address book state, and restores the address book to that state.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -755,7 +747,7 @@ If the <code>currentStatePointer</code> is at index <code>addressBookStateList.s
 <div class="ulist">
 <ul>
 <li>
-<p>Pros: Will use less memory (e.g. for <code>delete</code>, just save the person being deleted).</p>
+<p>Pros: Will use less memory (e.g. for <code>delete</code>, just save the diveSession being deleted).</p>
 </li>
 <li>
 <p>Cons: We must ensure that the implementation of each individual command are correct.</p>
@@ -802,20 +794,32 @@ If the <code>currentStatePointer</code> is at index <code>addressBookStateList.s
 </div>
 </div>
 <div class="sect2">
-<h3 id="proposed-data-encryption"><a class="link" href="#proposed-data-encryption">4.2. [Proposed] Data Encryption</a></h3>
+<h3 id="crud-for-code-divesession-code-objects"><a class="link" href="#crud-for-code-divesession-code-objects">4.2. CRUD for <code>DiveSession</code> objects</a></h3>
 <div class="paragraph">
-<p><em>{Explain here how the data encryption feature will be implemented}</em></p>
+<p>At its heart, the application is a divelog. The source code for this application was adopted from an addressbook application.
+The main implementation consideration was to minimize the number of changes in the existing addressbook class. At its heart
+the Dive Log uses the Model which is described in (See <a href="#Design-Model">Section 3.4, &#8220;Model component&#8221;</a>). The overall flow for command execution is similar
+to the case of undo. For additions, additions are made to the model, which is eventually commited to storage.
+An overall sequence diagram is as follows:</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="logging"><a class="link" href="#logging">4.3. Logging</a></h3>
+<h3 id="consistency-checks-for-diving-and-retaining-order-todo"><a class="link" href="#consistency-checks-for-diving-and-retaining-order-todo">4.3. Consistency Checks For Diving And Retaining Order [TODO]</a></h3>
+<div class="paragraph">
+<p>Currently, this is still unimplemented. However, the plan would be to modify the <code>DiveSession</code> object such that it implements <code>java.lang.Comparable</code>.
+In doing so it allows for the whole model to be traversed in a linear fashion. At the same time, this allows for insertion of
+new dives at the right locations efficiently through Binary Search. The sorting is achieved by time and date.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="logging"><a class="link" href="#logging">4.4. Logging</a></h3>
 <div class="paragraph">
 <p>We are using <code>java.util.logging</code> package for logging. The <code>LogsCenter</code> class is used to manage the logging levels and logging destinations.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 4.4, &#8220;Configuration&#8221;</a>)</p>
+<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 4.5, &#8220;Configuration&#8221;</a>)</p>
 </li>
 <li>
 <p>The <code>Logger</code> for a class can be obtained using <code>LogsCenter.getLogger(Class)</code> which will log messages according to the specified logging level</p>
@@ -846,7 +850,7 @@ If the <code>currentStatePointer</code> is at index <code>addressBookStateList.s
 </div>
 </div>
 <div class="sect2">
-<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">4.4. Configuration</a></h3>
+<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">4.5. Configuration</a></h3>
 <div class="paragraph">
 <p>Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: <code>config.json</code>).</p>
 </div>
@@ -1363,7 +1367,7 @@ Do take a look at <a href="#Design-Model">Section 3.4, &#8220;Model component&#8
 <p>Think about how you can use SLAP to design the method. Where should we place the main logic of deleting tags?</p>
 </li>
 <li>
-<p>Find out which of the existing API methods in  <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/model/AddressBook.java"><code>AddressBook</code></a> and <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/model/person/Person.java"><code>Person</code></a> classes can be used to implement the tag removal logic. <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/model/AddressBook.java"><code>AddressBook</code></a> allows you to update a person, and <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/model/person/Person.java"><code>Person</code></a> allows you to update the tags.</p>
+<p>Find out which of the existing API methods in  <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/model/AddressBook.java"><code>AddressBook</code></a> and <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/model/diveSession/Person.java"><code>Person</code></a> classes can be used to implement the tag removal logic. <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/model/AddressBook.java"><code>AddressBook</code></a> allows you to update a diveSession, and <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/model/diveSession/Person.java"><code>Person</code></a> allows you to update the tags.</p>
 </li>
 </ul>
 </div>
@@ -1373,7 +1377,7 @@ Do take a look at <a href="#Design-Model">Section 3.4, &#8220;Model component&#8
 <div class="ulist">
 <ul>
 <li>
-<p>Implement a <code>removeTag(Tag)</code> method in <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/model/AddressBook.java"><code>AddressBook</code></a>. Loop through each person, and remove the <code>tag</code> from each person.</p>
+<p>Implement a <code>removeTag(Tag)</code> method in <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/model/AddressBook.java"><code>AddressBook</code></a>. Loop through each diveSession, and remove the <code>tag</code> from each diveSession.</p>
 </li>
 <li>
 <p>Add a new API method <code>deleteTag(Tag)</code> in <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/model/ModelManager.java"><code>ModelManager</code></a>. Your <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/model/ModelManager.java"><code>ModelManager</code></a> should call <code>AddressBook#removeTag(Tag)</code>.</p>
@@ -1396,7 +1400,7 @@ Do take a look at <a href="#Design-Model">Section 3.4, &#8220;Model component&#8
 </div>
 <h4 id="code-ui-code-component" class="discrete"><code>Ui</code> component</h4>
 <div class="paragraph">
-<p><strong>Scenario:</strong> You are in charge of <code>ui</code>. During a beta testing session, your team is observing how the users use your address book application. You realize that one of the users occasionally tries to delete non-existent tags from a contact, because the tags all look the same visually, and the user got confused. Another user made a typing mistake in his command, but did not realize he had done so because the error message wasn&#8217;t prominent enough. A third user keeps scrolling down the list, because he keeps forgetting the index of the last person in the list. Your job is to implement improvements to the UI to solve all these problems.</p>
+<p><strong>Scenario:</strong> You are in charge of <code>ui</code>. During a beta testing session, your team is observing how the users use your address book application. You realize that one of the users occasionally tries to delete non-existent tags from a contact, because the tags all look the same visually, and the user got confused. Another user made a typing mistake in his command, but did not realize he had done so because the error message wasn&#8217;t prominent enough. A third user keeps scrolling down the list, because he keeps forgetting the index of the last diveSession in the list. Your job is to implement improvements to the UI to solve all these problems.</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -1413,7 +1417,7 @@ Do take a look at <a href="#Design-Ui">Section 3.2, &#8220;UI component&#8221;</
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Use different colors for different tags inside person cards. For example, <code>friends</code> tags can be all in brown, and <code>colleagues</code> tags can be all in yellow.</p>
+<p>Use different colors for different tags inside diveSession cards. For example, <code>friends</code> tags can be all in brown, and <code>colleagues</code> tags can be all in yellow.</p>
 <div class="paragraph">
 <p><strong>Before</strong></p>
 </div>
@@ -1681,7 +1685,7 @@ Do take a look at <a href="#Design-Storage">Section 3.5, &#8220;Storage componen
 <div class="sect3">
 <h4 id="description"><a class="link" href="#description">A.2.1. Description</a></h4>
 <div class="paragraph">
-<p>Edits the remark for a person specified in the <code>INDEX</code>.<br>
+<p>Edits the remark for a diveSession specified in the <code>INDEX</code>.<br>
 Format: <code>remark INDEX r/[REMARK]</code></p>
 </div>
 <div class="paragraph">
@@ -1691,11 +1695,11 @@ Format: <code>remark INDEX r/[REMARK]</code></p>
 <ul>
 <li>
 <p><code>remark 1 r/Likes to drink coffee.</code><br>
-Edits the remark for the first person to <code>Likes to drink coffee.</code></p>
+Edits the remark for the first diveSession to <code>Likes to drink coffee.</code></p>
 </li>
 <li>
 <p><code>remark 1 r/</code><br>
-Removes the remark for the first person.</p>
+Removes the remark for the first diveSession.</p>
 </li>
 </ul>
 </div>
@@ -1776,7 +1780,7 @@ for <code>RemarkCommandParser</code>.</p>
 <div class="sect4">
 <h5 id="step-3-ui-add-a-placeholder-for-remark-in-code-personcard-code"><a class="link" href="#step-3-ui-add-a-placeholder-for-remark-in-code-personcard-code">[Step 3] Ui: Add a placeholder for remark in <code>PersonCard</code></a></h5>
 <div class="paragraph">
-<p>Let&#8217;s add a placeholder on all our <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/ui/PersonCard.java"><code>PersonCard</code></a> s to display a remark for each person later.</p>
+<p>Let&#8217;s add a placeholder on all our <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/ui/PersonCard.java"><code>PersonCard</code></a> s to display a remark for each diveSession later.</p>
 </div>
 <div class="paragraph">
 <p><strong>Main:</strong></p>
@@ -1805,7 +1809,7 @@ for <code>RemarkCommandParser</code>.</p>
 <div class="sect4">
 <h5 id="step-4-model-add-code-remark-code-class"><a class="link" href="#step-4-model-add-code-remark-code-class">[Step 4] Model: Add <code>Remark</code> class</a></h5>
 <div class="paragraph">
-<p>We have to properly encapsulate the remark in our <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/model/person/Person.java"><code>Person</code></a> class. Instead of just using a <code>String</code>, let&#8217;s follow the conventional class structure that the codebase already uses by adding a <code>Remark</code> class.</p>
+<p>We have to properly encapsulate the remark in our <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/model/diveSession/Person.java"><code>Person</code></a> class. Instead of just using a <code>String</code>, let&#8217;s follow the conventional class structure that the codebase already uses by adding a <code>Remark</code> class.</p>
 </div>
 <div class="paragraph">
 <p><strong>Main:</strong></p>
@@ -1813,7 +1817,7 @@ for <code>RemarkCommandParser</code>.</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Add <code>Remark</code> to model component (you can copy from <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/model/person/Address.java"><code>Address</code></a>, remove the regex and change the names accordingly).</p>
+<p>Add <code>Remark</code> to model component (you can copy from <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/model/diveSession/Address.java"><code>Address</code></a>, remove the regex and change the names accordingly).</p>
 </li>
 <li>
 <p>Modify <code>RemarkCommand</code> to now take in a <code>Remark</code> instead of a <code>String</code>.</p>
@@ -1834,7 +1838,7 @@ for <code>RemarkCommandParser</code>.</p>
 <div class="sect4">
 <h5 id="step-5-model-modify-code-person-code-to-support-a-code-remark-code-field"><a class="link" href="#step-5-model-modify-code-person-code-to-support-a-code-remark-code-field">[Step 5] Model: Modify <code>Person</code> to support a <code>Remark</code> field</a></h5>
 <div class="paragraph">
-<p>Now we have the <code>Remark</code> class, we need to actually use it inside <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/model/person/Person.java"><code>Person</code></a>.</p>
+<p>Now we have the <code>Remark</code> class, we need to actually use it inside <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/model/diveSession/Person.java"><code>Person</code></a>.</p>
 </div>
 <div class="paragraph">
 <p><strong>Main:</strong></p>
@@ -1842,10 +1846,10 @@ for <code>RemarkCommandParser</code>.</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Add <code>getRemark()</code> in <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/model/person/Person.java"><code>Person</code></a>.</p>
+<p>Add <code>getRemark()</code> in <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/model/diveSession/Person.java"><code>Person</code></a>.</p>
 </li>
 <li>
-<p>You may assume that the user will not be able to use the <code>add</code> and <code>edit</code> commands to modify the remarks field (i.e. the person will be created without a remark).</p>
+<p>You may assume that the user will not be able to use the <code>add</code> and <code>edit</code> commands to modify the remarks field (i.e. the diveSession will be created without a remark).</p>
 </li>
 <li>
 <p>Modify <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/model/util/SampleDataUtil.java/"><code>SampleDataUtil</code></a> to add remarks for the sample data (delete your <code>diveLog.xml</code> so that the application will load the sample data when you launch it.)</p>
@@ -1882,7 +1886,7 @@ for <code>RemarkCommandParser</code>.</p>
 <div class="sect4">
 <h5 id="step-6b-test-add-withremark-for-code-personbuilder-code"><a class="link" href="#step-6b-test-add-withremark-for-code-personbuilder-code">[Step 6b] Test: Add withRemark() for <code>PersonBuilder</code></a></h5>
 <div class="paragraph">
-<p>Since <code>Person</code> can now have a <code>Remark</code>, we should add a helper method to <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/test/java/seedu/address/testutil/PersonBuilder.java"><code>PersonBuilder</code></a>, so that users are able to create remarks when building a <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/model/person/Person.java"><code>Person</code></a>.</p>
+<p>Since <code>Person</code> can now have a <code>Remark</code>, we should add a helper method to <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/test/java/seedu/address/testutil/PersonBuilder.java"><code>PersonBuilder</code></a>, so that users are able to create remarks when building a <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/model/diveSession/Person.java"><code>Person</code></a>.</p>
 </div>
 <div class="paragraph">
 <p><strong>Tests:</strong></p>
@@ -1890,7 +1894,7 @@ for <code>RemarkCommandParser</code>.</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Add a new method <code>withRemark()</code> for <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/test/java/seedu/address/testutil/PersonBuilder.java"><code>PersonBuilder</code></a>. This method will create a new <code>Remark</code> for the person that it is currently building.</p>
+<p>Add a new method <code>withRemark()</code> for <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/test/java/seedu/address/testutil/PersonBuilder.java"><code>PersonBuilder</code></a>. This method will create a new <code>Remark</code> for the diveSession that it is currently building.</p>
 </li>
 <li>
 <p>Try and use the method on any sample <code>Person</code> in <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/test/java/seedu/address/testutil/TypicalPersons.java"><code>TypicalPersons</code></a>.</p>
@@ -1935,7 +1939,7 @@ for <code>RemarkCommandParser</code>.</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Replace the logic in <code>RemarkCommand#execute()</code> (that currently just throws an <code>Exception</code>), with the actual logic to modify the remarks of a person.</p>
+<p>Replace the logic in <code>RemarkCommand#execute()</code> (that currently just throws an <code>Exception</code>), with the actual logic to modify the remarks of a diveSession.</p>
 </li>
 </ol>
 </div>
@@ -1969,24 +1973,18 @@ for <code>RemarkCommandParser</code>.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>has a need to manage a significant number of contacts</p>
+<p>Is a beginner Diver</p>
 </li>
 <li>
-<p>prefer desktop apps over other types</p>
+<p>Goes diving frequently.</p>
 </li>
 <li>
-<p>can type fast</p>
-</li>
-<li>
-<p>prefers typing over mouse input</p>
-</li>
-<li>
-<p>is reasonably comfortable using CLI apps</p>
+<p>Has the need to keep track of Nitrogen Levels so that he/she does not end up needing to undergo decompression.</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p><strong>Value proposition</strong>: manage contacts faster than a typical mouse/GUI driven app</p>
+<p><strong>Value proposition</strong>: An automated desktop app to keep track of nitrogen levels for divers.</p>
 </div>
 </div>
 </div>
@@ -2320,13 +2318,32 @@ for <code>RemarkCommandParser</code>.</p>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Author: Arjo Chakravarty
-A few similar products exist out there. Firstly, one of the team members (Arjo) uses a paper equivalent of such a dive log. This dive log records all the necessary information and provides a user with the basic safety information of the PG being provided as fields. However, the pressure group information must be hand calculated leading to error or negligence.
-image::paper_notebook.jpg[width="300"]
-Linus Torvalds, the benevolent dictator of the linux kernel and mastermind behind git has also created a dive log program. Linus’s program, known as Subsurface, is written in C++ and uses the Qt library allowing for cross-platform usage.
-image::subsurface_1.png[width="300"]
-Subsurface has a comprehensive interface for entering a lot of details. It allows the user to enter things such as the depth, who the dive master was, dive buddy’s name and equipment. It also has a nice satellite map to show where you are planning the dive. The plot on the right hand side illustrates the depth. This includes the so called “safety stop” where the diver allows some of the nitrogen to be released from his bloodstream before surfacing. The plot also is capable of showing a nitrogen profile and a rough estimate of how much oxygen should be kept in reserve for each part of the dive. All of this make it a very complete product with the exception that its initial learning curve is fairly steep.
-image::subsurface_2.png[width="300"]
-When the user first opens the dive log he or she is greeted with this screen, which is not very indicative of what exactly is going on. It takes the user a few attempts to figure out how to add a dive as the add dive is nested very deep inside the menu. It also does not display the pressure group anywhere.This can be confusing for beginner divers as they rely on pressure groups to ensure their own safety.</p>
+A few similar products exist out there.
+Firstly, one of the team members (Arjo) uses a paper equivalent of such a dive log. This dive log records all the necessary information and provides a user with the basic safety information of the PG being provided as fields. However, the pressure group information must be hand calculated leading to error or negligence.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/paper_notebook.jpg" alt="paper notebook" width="300">
+</div>
+</div>
+<div class="paragraph">
+<p>Linus Torvalds, the benevolent dictator of the linux kernel and mastermind behind git has also created a dive log program. Linus’s program, known as Subsurface, is written in C++ and uses the Qt library allowing for cross-platform usage.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/subsurface_1.png" alt="subsurface 1" width="300">
+</div>
+</div>
+<div class="paragraph">
+<p>Subsurface has a comprehensive interface for entering a lot of details. It allows the user to enter things such as the depth, who the dive master was, dive buddy’s name and equipment. It also has a nice satellite map to show where you are planning the dive. The plot on the right hand side illustrates the depth. This includes the so called “safety stop” where the diver allows some of the nitrogen to be released from his bloodstream before surfacing. The plot also is capable of showing a nitrogen profile and a rough estimate of how much oxygen should be kept in reserve for each part of the dive. All of this make it a very complete product with the exception that its initial learning curve is fairly steep.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/subsurface_2.png" alt="subsurface 2" width="300">
+</div>
+</div>
+<div class="paragraph">
+<p>When the user first opens the dive log he or she is greeted with this screen, which is not very indicative of what exactly is going on. It takes the user a few attempts to figure out how to add a dive as the add dive is nested very deep inside the menu. It also does not display the pressure group anywhere.This can be confusing for beginner divers as they rely on pressure groups to ensure their own safety.</p>
 </div>
 </div>
 </div>
@@ -2387,11 +2404,11 @@ Expected: The most recent window size and location is retained.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="deleting-a-person"><a class="link" href="#deleting-a-person">H.2. Deleting a person</a></h3>
+<h3 id="deleting-a-divesession"><a class="link" href="#deleting-a-divesession">H.2. Deleting a diveSession</a></h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Deleting a person while all persons are listed</p>
+<p>Deleting a diveSession while all persons are listed</p>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
@@ -2403,7 +2420,7 @@ Expected: First contact is deleted from the list. Details of the deleted contact
 </li>
 <li>
 <p>Test case: <code>delete 0</code><br>
-Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.</p>
+Expected: No diveSession is deleted. Error details shown in the status message. Status bar remains the same.</p>
 </li>
 <li>
 <p>Other incorrect delete commands to try: <code>delete</code>, <code>delete x</code> (where x is larger than the list size) <em>{give more}</em><br>
@@ -2439,4 +2456,4 @@ Expected: Similar to previous.</p>
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-10-16 00:28:52 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-10-16 00:29:49 UTC</div></div></div></body></html>
