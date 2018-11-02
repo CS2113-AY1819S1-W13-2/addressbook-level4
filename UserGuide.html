@@ -25,7 +25,7 @@
 <li><a href="#undo">3.10. Undoing previous command : <code>undo</code></a></li>
 <li><a href="#redoing-the-previously-undone-command-code-redo-code">3.11. Redoing the previously undone command : <code>redo</code></a></li>
 <li><a href="#clearing-all-entries-code-clear-code">3.12. Clearing all entries : <code>clear</code></a></li>
-<li><a href="#setting-parameters-to-sort-dives-code-sortby-code-a-id-sortby-a-unimplemented-aiming-for-v1-4">3.13. Setting parameters to sort dives : <code>sortby</code> <a id="sortby"></a> (Unimplemented&#8230;&#8203; Aiming for v1.4)</a></li>
+<li><a href="#setting-parameters-to-sort-dives-code-sortby-code-a-id-sortby-a-coming-in-v1-4">3.13. Setting parameters to sort dives : <code>sortby</code> <a id="sortby"></a> [coming in V1.4]</a></li>
 <li><a href="#planning-mode-code-newplan-code-or-code-normalmode-code">3.14. Planning Mode : <code>newplan</code> or <code>normalmode</code></a></li>
 <li><a href="#exiting-the-program-code-exit-code">3.15. Exiting the program : <code>exit</code></a></li>
 <li><a href="#saving-the-data">3.16. Saving the data</a></li>
@@ -632,7 +632,10 @@ use <code>undo</code> to, <em>you&#8217;ve guessed it</em>, undo your mistaken <
 </div>
 </div>
 <div class="sect2">
-<h3 id="setting-parameters-to-sort-dives-code-sortby-code-a-id-sortby-a-unimplemented-aiming-for-v1-4"><a class="link" href="#setting-parameters-to-sort-dives-code-sortby-code-a-id-sortby-a-unimplemented-aiming-for-v1-4">3.13. Setting parameters to sort dives : <code>sortby</code> <a id="sortby"></a> (Unimplemented&#8230;&#8203; Aiming for v1.4)</a></h3>
+<h3 id="setting-parameters-to-sort-dives-code-sortby-code-a-id-sortby-a-coming-in-v1-4"><a class="link" href="#setting-parameters-to-sort-dives-code-sortby-code-a-id-sortby-a-coming-in-v1-4">3.13. Setting parameters to sort dives : <code>sortby</code> <a id="sortby"></a> [coming in V1.4]</a></h3>
+<div class="paragraph">
+<p>In V1.3, all dives are sorted automatically according to time and date by default.</p>
+</div>
 <div class="paragraph">
 <p>Want to view your dives in ranked order by different options? Simply type <code>sortby</code> followed by a <code>KEYWORD</code>,
  your following <code>list</code>, <code>find</code> commands will return you all your dive sessions in that particular order.<br></p>
@@ -685,7 +688,12 @@ You can only use the specific keywords below.
 <div class="paragraph">
 <p>The planning mode is a temporary space for you to plan trips and to simulate dives. This is especially important if you
  are planning on a multiple day diving trip!<br>
- When you enter the planning mode, simply enter simulation dives as per how you would use the other commands normally.</p>
+ When you enter the planning mode, simply enter simulation dives as per how you would use the other commands normally.
+When you exit, all your simulation files will be deleted automatically. In the Current V1.3,
+planning mode only supports <code>add</code>, <code>delete</code> and <code>edit</code> commands<br></p>
+</div>
+<div class="paragraph">
+<p>[Coming in V1.4] To convert your simulation files to the actual mode, type <code>convert</code></p>
 </div>
 <div class="paragraph">
 <p>Format: <code>newplan</code> to enter Planning Mode, <code>normalmode</code> to exit planning mode.</p>
@@ -729,4 +737,4 @@ Format: <code>exit</code></p>
 <strong>A</strong>: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Dive Log folder.</p>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-02 02:50:26 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-02 07:29:39 UTC</div></div></div></body></html>
