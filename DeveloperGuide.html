@@ -1,6 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="Asciidoctor 1.5.6.1"><title>Divelog - Developer Guide v.1.0</title><link rel="stylesheet" href="stylesheets/gh-pages.css">
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="Asciidoctor 1.5.6.1"><title>Divelog - Developer Guide v.1.4</title><link rel="stylesheet" href="stylesheets/gh-pages.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="stylesheets/coderay-asciidoctor.css"></head><body class="article"><div id="site-header"><nav class="navbar navbar-light bg-light"><div class="container"><a class="navbar-brand" href="index.html">DiveLog</a><ul class="navbar-nav"><li class="nav-item"></li><a class="nav-link" href="UserGuide.html">User Guide</a><li class="nav-item"></li><a class="nav-link active" href="DeveloperGuide.html">Developer Guide</a></ul></div></nav></div><div id="header"><h1>Divelog - Developer Guide v.1.0</h1></div><div id="content"><div id="preamble">
+<link rel="stylesheet" href="stylesheets/coderay-asciidoctor.css"></head><body class="article"><div id="site-header"><nav class="navbar navbar-light bg-light"><div class="container"><a class="navbar-brand" href="index.html">DiveLog</a><ul class="navbar-nav"><li class="nav-item"></li><a class="nav-link" href="UserGuide.html">User Guide</a><li class="nav-item"></li><a class="nav-link active" href="DeveloperGuide.html">Developer Guide</a></ul></div></nav></div><div id="header"><h1>Divelog - Developer Guide v.1.4</h1></div><div id="content"><div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
 <p>By: <code>Team CS2113-AY1819S1-W13-2</code>      Since: <code>Aug 2018</code>      Licence: <code>MIT</code></p>
@@ -34,9 +34,12 @@
 <li><a href="#lookuptable">4.2. Looking Up Dive Tables For Pressure Groups</a></li>
 <li><a href="#consistency-checks-for-code-divesession-code-objects-during-creation-update">4.3. Consistency checks for <code>DiveSession</code> objects during Creation/Update</a></li>
 <li><a href="#portover">4.4. New Feature: Planning Mode (with <code>portover</code> capability)</a></li>
-<li><a href="#localized-units">4.5. Localized Units</a></li>
-<li><a href="#logging">4.6. Logging</a></li>
-<li><a href="#Implementation-Configuration">4.7. Configuration</a></li>
+<li><a href="#sorting-of-data">4.5. Sorting of data</a></li>
+<li><a href="#new-parameters-conditions-in-a-divesession">4.6. New Parameters &amp; conditions in a DiveSession</a></li>
+<li><a href="#localized-units">4.7. Localized Units</a></li>
+<li><a href="#colour-coding-of-the-pressure-groups">4.8. Colour coding of the Pressure Groups</a></li>
+<li><a href="#logging">4.9. Logging</a></li>
+<li><a href="#Implementation-Configuration">4.10. Configuration</a></li>
 </ul>
 </li>
 <li><a href="#documentation">5. Documentation</a>
@@ -122,7 +125,7 @@ Windows developers are highly recommended to use JDK <code>9</code>.
 </li>
 <li>
 <p><strong>IntelliJ</strong> IDE</p>
-<div class="admonitionblock note">
+<div id="JavaFXTip" class="admonitionblock note">
 <table>
 <tr>
 <td class="icon">
@@ -1108,11 +1111,10 @@ the underlying method calls for a <code>undo</code> method and decreases the cou
 <p>If the user decides to call <code>portover</code>, the counter is simply reset to 0 and the state of the machine is changed back to normal mode.</p>
 </li>
 <li>
-<p><strong>Pros:</strong> Uses a method that is already present, <code>undo</code>. This means there won&#8217;t be two implementations of the same method and follows the
-single responsibility principle.</p>
+<p><strong>Pros:</strong> Uses a method that is already present, <code>undo</code>. This means there won&#8217;t be two implementations of the same method.</p>
 </li>
 <li>
-<p><strong>Cons:</strong></p>
+<p><strong>Cons:</strong> The limitations of this method lie in its sole ability to handle <code>add</code>, <code>delete</code> and <code>edit</code> commands in planning mode. Any other commands are not accepted.</p>
 </li>
 </ul>
 </div>
@@ -1125,24 +1127,29 @@ single responsibility principle.</p>
 <p>Pros: All types of commands can now be used in planning mode, and not just <code>add</code>, <code>delete</code> and <code>edit</code></p>
 </li>
 <li>
-<p>Cons: Extra implementations and considerations have to be taken into account. This might increase coupling between classes.
-=== Sorting of data
-We have considered that once a user has a considerable number of dives registered in the app, the user would potentially have difficulty finding dives,
+<p>Cons: Extra implementations and considerations have to be taken into account. This might increase coupling between classes.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="sorting-of-data"><a class="link" href="#sorting-of-data">4.5. Sorting of data</a></h3>
+<div class="paragraph">
+<p>We have considered that once a user has a considerable number of dives registered in the app, the user would potentially have difficulty finding dives,
 even with the <code>find</code> function. (as many dives can have the same parameters such as location) To simplify the app usage, this command allows for users to decide the way
 that the data shown to them is organised.</p>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-5"><a class="link" href="#design-considerations-5">4.4.2. Design Considerations</a></h4>
+<h4 id="design-considerations-5"><a class="link" href="#design-considerations-5">4.5.1. Design Considerations</a></h4>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Current implementation</strong>:</p>
+<p><strong>Current implementation</strong>: A sort method with a time/date comparator is called every time a new dive is added, deleted
+or edited.</p>
 </li>
 <li>
 <p><strong>Potential improvement to the feature 1</strong>: Add a <code>sortby</code> CLI command.</p>
@@ -1200,29 +1207,32 @@ method after every add or edit command. You can also create a new event in commo
 </li>
 <li>
 <p>Cons: Can be troublesome to implement in the beginning.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Potential improvement to the feature 2</strong>: Reverse the current order by calling <code>reverseorder</code></p>
+</div>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Potential improvement to the feature 2</strong>: Reverse the current order by calling <code>reverseorder</code></p>
-</li>
-</ul>
-</div>
+<p>Method to implement: Simply reverse the comparator in the sorting methods, where comparators are stored in
+a sample method shown in Figure 12. (above)</p>
 </li>
 <li>
-<p>Method to implement: Simply reverse the comparator in the sorting methods, which is located in the</p>
+<p>Pros: Improved usability and thus better UX.</p>
 </li>
 <li>
-<p>Pros: Improved usability</p>
-</li>
-<li>
-<p>Cons: Increased difficulty to maintain
-=== New Parameters &amp; conditions in a DiveSession</p>
+<p>Cons: Increased difficulty to maintain as the</p>
 </li>
 </ul>
 </div>
 </div>
+</div>
+<div class="sect2">
+<h3 id="new-parameters-conditions-in-a-divesession"><a class="link" href="#new-parameters-conditions-in-a-divesession">4.6. New Parameters &amp; conditions in a DiveSession</a></h3>
 <div class="sect3">
-<h4 id="timezone"><a class="link" href="#timezone">4.4.3. Timezone</a></h4>
+<h4 id="timezone"><a class="link" href="#timezone">4.6.1. Timezone</a></h4>
 <div class="paragraph">
 <p>Considering that users would dive in many different parts of the world, we have taken the effort to implement a Timezone parameter to ease users in adding new dives into the Dive Log without the need to convert any time to Local time.<br>
 We have decided to utilise the format of UTC, given its universal usage around the world. The UTC timezones range from -12 to +12, including 0. Singapore lies in the timezone of UTC+8.</p>
@@ -1230,14 +1240,16 @@ We have decided to utilise the format of UTC, given its universal usage around t
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Alternative 1 (current choice)</strong>: When calculating Pressure Groups using TimeZone</p>
+<p><strong>Alternative 1 (current choice)</strong>: When calculating Pressure Groups using TimeZone, all time is converted
+to UTC time before calculating duration, and subsequently pressure groups and its resultant results.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Pros:</p>
+<p>Pros: There is no confusion of timezones when doing complex calculations.</p>
 </li>
 <li>
-<p>Cons:</p>
+<p>Cons: There is a need to convert time from UTC time back to local time. If not taken care of,
+inaccurate times may be shown.</p>
 </li>
 </ul>
 </div>
@@ -1259,7 +1271,7 @@ We have decided to utilise the format of UTC, given its universal usage around t
 </div>
 </div>
 <div class="sect3">
-<h4 id="time-and-ourdate"><a class="link" href="#time-and-ourdate">4.4.4. Time and OurDate</a></h4>
+<h4 id="time-and-ourdate"><a class="link" href="#time-and-ourdate">4.6.2. Time and OurDate</a></h4>
 <div class="paragraph">
 <p>Time and OurDate are 2 of the new parameters in the Dive Log. In order to be able to calculate the Pressure Groups automatically,
 there has to be a time and date parameter. We have decided to create our own class.</p>
@@ -1297,7 +1309,7 @@ there has to be a time and date parameter. We have decided to create our own cla
 </div>
 </div>
 <div class="sect2">
-<h3 id="localized-units"><a class="link" href="#localized-units">4.5. Localized Units</a></h3>
+<h3 id="localized-units"><a class="link" href="#localized-units">4.7. Localized Units</a></h3>
 <div class="paragraph">
 <p>As of <code>v1.3</code>, a <code>set_units</code> command was added. This allows the user to switch between meters and feet.
 As shown in the diagram below, the implementation of this command involves altering the <code>ApplicationState</code> singleton. Once the <code>ApplicationState</code>
@@ -1317,14 +1329,85 @@ Internally all the units are stored as meters. This choice was largely made to k
 </div>
 </div>
 <div class="sect2">
-<h3 id="logging"><a class="link" href="#logging">4.6. Logging</a></h3>
+<h3 id="colour-coding-of-the-pressure-groups"><a class="link" href="#colour-coding-of-the-pressure-groups">4.8. Colour coding of the Pressure Groups</a></h3>
+<div class="paragraph">
+<p>Through engagement with our test users and from our user stories, the pressure group needed to be obvious and easy to reference to
+our users, which meant that it had to stand out on the display. These pressure group would let the divers know if their dives was
+safe and how much leeway they might have in the water. As such, the <code>BrowserPanel</code> takes into the account the pressure groups that
+are supposed to be returned and adds colour to it.</p>
+</div>
+<div class="sect3">
+<h4 id="design-considerations-6"><a class="link" href="#design-considerations-6">4.8.1. Design Considerations</a></h4>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Current implementation</strong>: When the pressure group returned the the <code>BrowserPanel</code> for display to the user, the colour is changed by
+changing its CSS style. The colour is chosen from green [<code>#0FFF0F</code>] to yellow [<code>#F5FF07</code>] to red [<code>#FF0000</code>]. The colour are in order
+of normal to moderate and finally, dangerous amount of nitrogen in the blood of the user or their pressure group. The colours are seen
+in the figure below.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: The pressure group is clearly distinguished by its severity at one glance.</p>
+</li>
+<li>
+<p>Cons: Not all may be able to use it. For example, users who may be colour-blind.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/Colour_gradient.png" alt="Colour gradient" width="600">
+</div>
+<div class="title">Figure 13. Colour Gradient Chart</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Alternative implementation</strong>: Instead of changing the colour, the text font maybe increased in proportion to the severity of the pressure
+group.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Most people would be able to see it. If the text is very big, the warning regarding its severity will be obvious.</p>
+</li>
+<li>
+<p>Cons: May make the UI and screen messy. Will need to have a comparision chart to compare the size to.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Potential Improvements</strong>: The current implementation could be combined with the alternative implementation, to make the emphasis on the
+pressure group being severe. For example, the pressure group could be in the red zone (dangerous/severe zone) and the text font would be
+increased.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Makes it even clearer, especially if the pressure group is at dangerous levels. Allows more users to potentially benefit from it.</p>
+</li>
+<li>
+<p>Cons: If not properly implemented, it might end up making the UI messy.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="logging"><a class="link" href="#logging">4.9. Logging</a></h3>
 <div class="paragraph">
 <p>We are using <code>java.util.logging</code> package for logging. The <code>LogsCenter</code> class is used to manage the logging levels and logging destinations.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 4.7, &#8220;Configuration&#8221;</a>)</p>
+<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 4.10, &#8220;Configuration&#8221;</a>)</p>
 </li>
 <li>
 <p>The <code>Logger</code> for a class can be obtained using <code>LogsCenter.getLogger(Class)</code> which will log messages according to the specified logging level</p>
@@ -1355,7 +1438,7 @@ Internally all the units are stored as meters. This choice was largely made to k
 </div>
 </div>
 <div class="sect2">
-<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">4.7. Configuration</a></h3>
+<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">4.10. Configuration</a></h3>
 <div class="paragraph">
 <p>Certain properties of the application can be controlled (e.g. App name, logging level) through the configuration file (default: <code>config.json</code>).</p>
 </div>
@@ -1421,7 +1504,7 @@ Alternatively, you can download the AsciiDoc plugin for IntelliJ, which allows y
 <div class="content">
 <img src="images/chrome_save_as_pdf.png" alt="chrome save as pdf" width="300">
 </div>
-<div class="title">Figure 13. Saving documentation as PDF files in Chrome</div>
+<div class="title">Figure 14. Saving documentation as PDF files in Chrome</div>
 </div>
 </div>
 <div class="sect2">
@@ -2266,4 +2349,4 @@ This method returns a long type of length 12, in the format of <em>[DDMMYYYYHHMM
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-11 17:58:52 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-11 22:46:31 UTC</div></div></div></body></html>
