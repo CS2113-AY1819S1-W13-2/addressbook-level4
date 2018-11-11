@@ -1,0 +1,445 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="Asciidoctor 1.5.6.1"><title>Jun Xiang - Project Portfolio</title><link rel="stylesheet" href="../stylesheets/gh-pages.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="../stylesheets/coderay-asciidoctor.css"></head><body class="article"><div id="site-header"><nav class="navbar navbar-light bg-light"><div class="container"><a class="navbar-brand" href="../index.html">DiveLog</a><ul class="navbar-nav"><li class="nav-item"></li><a class="nav-link" href="../UserGuide.html">User Guide</a><li class="nav-item"></li><a class="nav-link" href="../DeveloperGuide.html">Developer Guide</a></ul></div></nav></div><div id="header"><h1>Jun Xiang - Project Portfolio</h1></div><div id="content"><div class="sect1">
+<h2 id="cs2113t-project-divelog"><a class="link" href="#cs2113t-project-divelog">CS2113T Project: DiveLog</a></h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="overview"><a class="link" href="#overview">Overview</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>DiveLog</strong> is a desktop application that mainly uses CLI as a user interface. Dive Log provides a simple way for underwater divers to input details of their dives such as the time they spent at a particular depth, and the application will keep track of their nitrogen levels.
+This allows divers to plan their next trip safely.</p>
+</div>
+<div class="paragraph">
+<p>Dive Log is able to calculate accurately the diver’s current Blood Nitrogen Composition, which is used to evaluate when it will be safe to dive again, and for how long.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="summary-of-contributions"><a class="link" href="#summary-of-contributions">Summary of contributions</a></h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Code Contributed</strong> [<a href="https://nuscs2113-ay1819s1.github.io/dashboard/#=undefined&amp;search=cjunxiang&amp;sort=displayName&amp;since=2018-09-12&amp;until=2018-11-02&amp;timeframe=day&amp;reverse=false&amp;repoSort=true">Cjunx</a>]</p>
+</li>
+<li>
+<p><strong>Major enhancement</strong>: Implemented a <strong>Planning Mode</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>What it does: This feature allows users to be able to plan for future dives without the fear of corrupting their current data.
+When the users exit planning mode, the data is restored to before when entered planning mode.
+If the user wants to transfer planning data to normal mode, the user can use the <code>portover</code> command.</p>
+</li>
+<li>
+<p>Justification: This is a major feature of the app as divers often want to plan their dives ahead of their trips. This
+also helps to prevent the instance where divers cannot board a plane ride due to too high of a Nitrogen composition in the body.</p>
+</li>
+<li>
+<p>Highlights: This enhancement works across many different commands and will require understanding of every command class file
+in order to properly implement.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Minor enhancement</strong>: Created Time, OurDate parameters in a <code>DiveSession</code> and a helper class <code>CompareUtils</code> which contain methods to handle OurDate and Time. The two parameters
+are crucial in logging a dive, and methods in CompareUtils are also crucial in calculations of Pressure Groups which is the main feature of our app. <code>CompareUtils</code>
+contain methods that are used to help calculate Pressure Group.</p>
+</li>
+<li>
+<p><strong>Other contributions</strong>:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Enhancements to existing features:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Wrote tests for helper method to ensure adequate code coverage (Pull requests <a href="https://github.com/cjunxiang/main/commit/ac50bdd38ca56d40b402fc1b6b31300496bcab3b">#58</a>)</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Documentation:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>[UG] Introduced tables to organise information (Cosmetics)
+<a href="https://github.com/CS2113-AY1819S1-W13-2/main/commit/f7199ced6950cfd8d16ae3ac5a61f0ad9fd48253">#3</a></p>
+</li>
+<li>
+<p>[UG] Tweaked the whole User Guide&#8217;s tone to sound more interactive
+<a href="https://github.com/CS2113-AY1819S1-W13-2/main/commit/9f8e2a3e41224a95130cb3692ed1c914f9239fb7">#66</a> <a href="https://github.com/CS2113-AY1819S1-W13-2/main/pull/135">#135</a></p>
+</li>
+<li>
+<p>[UG] Documented new commands/features
+<a href="https://github.com/CS2113-AY1819S1-W13-2/main/commit/1a618379326d09eb35ebcbbc7deedaa75db0f4e8">#39</a></p>
+</li>
+<li>
+<p>[DG] Added components pertaining to Sorting, Planning Mode &amp; New parameters in a Dive:
+<a href="https://github.com/CS2113-AY1819S1-W13-2/main/commit/eada8f01b85ee8827d916dc2e4fa38ed49926a38">#41</a>
+<a href="https://github.com/CS2113-AY1819S1-W13-2/main/pull/139/">#139</a></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Community:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>PRs reviewed (examples: <a href="https://github.com/CS2113-AY1819S1-W13-2/main/pull/47">#47</a>)</p>
+</li>
+<li>
+<p>Suggestions &amp; discussions through comments on Issue trackers (examples:  <a href="https://github.com/CS2113-AY1819S1-W13-2/main/issues/17">#17</a>)</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="contributions-to-the-user-guide"><a class="link" href="#contributions-to-the-user-guide">Contributions to the User Guide</a></h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 100%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users.</em></p></td>
+</tr>
+</tbody>
+</table>
+<div class="sect2">
+<h3 id="setting-parameters-to-sort-dives-code-sortby-code-a-id-sortby-a-coming-in-v2-0"><a class="link" href="#setting-parameters-to-sort-dives-code-sortby-code-a-id-sortby-a-coming-in-v2-0">Setting parameters to sort dives : <code>sortby</code> <a id="sortby"></a> [coming in V2.0]</a></h3>
+<div class="paragraph">
+<p>In V1.4, all dives are sorted automatically according to time and date by default.</p>
+</div>
+<div class="paragraph">
+<p>Want to view your dives in ranked order by different options? Simply type <code>sortby</code> followed by a <code>KEYWORD</code>,
+ your following <code>list</code>, <code>find</code> commands will return you all your dive sessions in that particular order.<br></p>
+</div>
+<div class="paragraph">
+<p>Format: <code>sortby KEYWORD</code>
+WARNING: You can only use the specific keywords below.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. Table of parameters available to sort by</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter Type</th>
+<th class="tableblock halign-left valign-top">Keyword</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Time</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">time</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Location (lexicographical)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">location</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Duration of Dive</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">duration</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="planning-mode-code-newplan-code-or-code-normalmode-code"><a class="link" href="#planning-mode-code-newplan-code-or-code-normalmode-code">Planning Mode : <code>newplan</code> or <code>normalmode</code></a></h3>
+<div class="paragraph">
+<p>The planning mode is a temporary space for you to plan trips and to simulate dives. This is especially important if you
+ are planning on a multiple day diving trip!<br>
+ When you enter the planning mode, simply enter simulation dives as per how you would use the other commands normally.</p>
+</div>
+<div class="paragraph">
+<p>When you exit, all your simulation files will be deleted automatically. In the Current V1.4,
+planning mode only supports <code>add</code>, <code>delete</code> and <code>edit</code> commands<br></p>
+</div>
+<div class="paragraph">
+<p>Format: <code>newplan</code> to enter Planning Mode, <code>normalmode</code> to exit planning mode.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+When you exit the planning mode, you will return to the state before you entered.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="port-files-from-planning-mode-to-normal-mode-code-portover-code"><a class="link" href="#port-files-from-planning-mode-to-normal-mode-code-portover-code">Port files from Planning Mode to normal mode : <code>portover</code></a></h3>
+<div class="paragraph">
+<p>When you have finished your plan and found the perfect set of dives, simply input the <code>portover</code> command and
+the app will port all planning data into data in the normal mode.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+You cannot use this command in <code>normalmode</code> as there are no planning data to port over.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="contributions-to-the-developer-guide"><a class="link" href="#contributions-to-the-developer-guide">Contributions to the Developer Guide</a></h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 100%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project.</em></p></td>
+</tr>
+</tbody>
+</table>
+<div class="sect2">
+<h3 id="new-parameters-conditions-in-a-divesession"><a class="link" href="#new-parameters-conditions-in-a-divesession">New Parameters &amp; conditions in a DiveSession</a></h3>
+<div class="sect3">
+<h4 id="timezone"><a class="link" href="#timezone">Timezone</a></h4>
+<div class="paragraph">
+<p>Considering that users would dive in many different parts of the world, we have taken the effort to implement a Timezone parameter to ease users in adding new dives into the Dive Log without the need to convert any time to Local time.<br>
+We have decided to utilise the format of UTC, given its universal usage around the world. The UTC timezones range from -12 to +12, including 0. Singapore lies in the timezone of UTC+8.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Alternative 1 (current choice)</strong>: When calculating Pressure Groups using TimeZone</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros:</p>
+</li>
+<li>
+<p>Cons:</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Alternative 2: </strong> Adopt Java SE 9&#8217;s java.time library</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: There are pre-built algorithms and methods in the library.</p>
+</li>
+<li>
+<p>Cons: Takes time to learn and to adopt the methods, which might not be efficient for our light usage.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="time-and-ourdate"><a class="link" href="#time-and-ourdate">Time and OurDate</a></h4>
+<div class="paragraph">
+<p>Time and OurDate are 2 of the new parameters in the Dive Log. In order to be able to calculate the Pressure Groups automatically,
+there has to be a time and date parameter. We have decided to create our own class.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Alternative 1 (current choice)</strong>: Use a 4 length String to contain time and 8 length String to contain date.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: When reading in data from the <code>ArgumentMultimap</code>, it requires very little effort in parsing. Also, the use of String allows for versatile typecasting into long, int, or Java SE 7&#8217;s SimpleDateFormat. Similarly, the use of String and long as main type allows for better versatility among different methods.</p>
+</li>
+<li>
+<p>Cons: Data needs to be parsed into Java SE 8&#8217;s java.date and Java SE 7&#8217;s SimpleDateFormat in order to calculate time differences. This means that there can potentially be many type conflicts. However, this problem is contained in a helper class <code>CompareUtils</code> which handles methods like <code>checkTimeDifference</code>, <code>getLocalDate</code> and <code>convertTimeToLocal</code>.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Alternative 2: </strong> Adopt Java SE 9&#8217;s java.time library</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: More volatile as the library contains many ready-made solutions. Also, java.time also allows for the easy implementation of <strong>local time</strong>, which is one of our improvements made to AB4.</p>
+</li>
+<li>
+<p>Cons: Takes time to learn and to adopt the methods, which might not be efficient for our light usage.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="sorting-of-data"><a class="link" href="#sorting-of-data">Sorting of data</a></h3>
+<div class="paragraph">
+<p>We have considered that once a user has a considerable number of dives registered in the app, the user would potentially have difficulty finding dives,
+even with the <code>find</code> function. (as many dives can have the same parameters such as location) To simplify the app usage, this command allows for users to decide the way
+that the data shown to them is organised.</p>
+</div>
+<div class="sect3">
+<h4 id="design-considerations"><a class="link" href="#design-considerations">Design Considerations</a></h4>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Current implementation</strong>:</p>
+</li>
+<li>
+<p><strong>Potential improvement to the feature 1</strong>: Add a <code>sortby</code> CLI command.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Method to implement:<br>
+<strong>Step 1:</strong> Create a new Command<a id="GetStartedProgramming-RemarkCommand"></a> with a Command Parser that reads in the Command Prefix and a
+[KEYWORD], which will dictate the parameter to sort by. The Command and Parser file should look like below:</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/sortbyparser.png" alt="sortbyparser" width="600">
+</div>
+<div class="title">Figure 1. Command Parser File Sample</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/sortbyclass.png" alt="sortbyclass" width="600">
+</div>
+<div class="title">Figure 2. Command Class File Sample</div>
+</div>
+<div class="paragraph">
+<p>Optional: Create a enum with the parameters you want to sort the data by (E.g Time, Location and Duration)</p>
+</div>
+<div class="paragraph">
+<p><strong><em>Sample Enum</em></strong><br>
+<em>public enum SortCategory {<br>
+TIME, LOCATION, DURATION<br>
+}</em></p>
+</div>
+<div class="paragraph">
+<p><strong>Step 2:</strong> Create a sort method preferably in a separate utils class. This method should take in the parameter to sort by. (It will be easier and
+less prone to mistakes if Step 2 was used) The corresponding comparators should be created. The sort method should look something like b</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/sortmethod.png" alt="sortmethod" width="500">
+</div>
+<div class="title">Figure 3. Sort method Sample</div>
+</div>
+<div class="paragraph">
+<p><strong>Step 3:</strong> Ensure that the divelog refreshes / reflects the newly sorted. You can do this by calling for the sort
+method after every add or edit command. You can also create a new event in commons.events.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Once implemented, to increase the number of parameters / methods to sort the data by, simply create a new corresponding comparator, add the respective prefixes the parse for, and to increase the number of parameters included in the Enum file.</p>
+</li>
+<li>
+<p>Cons: Can be troublesome to implement in the beginning.</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Potential improvement to the feature 2</strong>: Reverse the current order by calling <code>reverseorder</code></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Method to implement: Simply reverse the comparator in the sorting methods, which is located in the</p>
+</li>
+<li>
+<p>Pros: Improved usability</p>
+</li>
+<li>
+<p>Cons: Increased difficulty to maintain</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="new-feature-planning-mode-with-code-portover-code-capability"><a class="link" href="#new-feature-planning-mode-with-code-portover-code-capability">New Feature: Planning Mode (with <code>portover</code> capability)</a></h3>
+<div class="paragraph">
+<p>From our verbal surveys with test users and from our user stories, we have decided to implement a Planning mode in order for users to plan their
+dives ahead of their trips safely without worrying about corrupting their current data.</p>
+</div>
+<div class="sect3">
+<h4 id="design-considerations-2"><a class="link" href="#design-considerations-2">Design Considerations</a></h4>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Alternative 1 (current choice)</strong>:
+When in planning mode, a counter increments every time a command is called. In addition, there is now a state called planning mode, which shows true if in planning mode and false if in normal mode.<br></p>
+<div class="ulist">
+<ul>
+<li>
+<p>When the user chooses to exit and enter <code>normalmode</code>,
+the underlying method calls for a <code>undo</code> method and decreases the counter. This will repeat until the counter is zero, whereby then the state of the machine will change back to normal mode.<br></p>
+</li>
+<li>
+<p>If the user decides to call <code>portover</code>, the counter is simply reset to 0 and the state of the machine is changed back to normal mode.</p>
+</li>
+<li>
+<p><strong>Pros:</strong> Uses a method that is already present, <code>undo</code>. This means there won&#8217;t be two implementations of the same method and follows the
+single responsibility principle.</p>
+</li>
+<li>
+<p><strong>Cons:</strong></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Alternative 2</strong>: Create a temporary Stack to store commands instead of just a counter.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: All types of commands can now be used in planning mode, and not just <code>add</code>, <code>delete</code> and <code>edit</code></p>
+</li>
+<li>
+<p>Cons: Extra implementations and considerations have to be taken into account. This might increase coupling between classes.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-11 14:30:50 UTC</div></div></div></body></html>
