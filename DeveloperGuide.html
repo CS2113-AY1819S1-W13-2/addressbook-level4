@@ -32,10 +32,14 @@
 <ul class="sectlevel2">
 <li><a href="#undo-redo-feature">4.1. Undo/Redo feature</a></li>
 <li><a href="#looking-up-dive-tables-for-pressure-groups">4.2. Looking Up Dive Tables For Pressure Groups</a></li>
-<li><a href="#crud-for-code-divesession-code-objects">4.3. CRUD for <code>DiveSession</code> objects</a></li>
-<li><a href="#localized-units">4.4. Localized Units</a></li>
-<li><a href="#logging">4.5. Logging</a></li>
-<li><a href="#Implementation-Configuration">4.6. Configuration</a></li>
+<li><a href="#new-feature-planning-mode-with-code-portover-code-capability">4.3. New Feature: Planning Mode (with <code>portover</code> capability)</a></li>
+<li><a href="#sorting-of-data">4.4. Sorting of data</a></li>
+<li><a href="#design-considerations-4">4.5. Design Considerations</a></li>
+<li><a href="#new-parameters-conditions-in-dive-log">4.6. New Parameters &amp; conditions in Dive Log</a></li>
+<li><a href="#crud-for-code-divesession-code-objects">4.7. CRUD for <code>DiveSession</code> objects</a></li>
+<li><a href="#localized-units">4.8. Localized Units</a></li>
+<li><a href="#logging">4.9. Logging</a></li>
+<li><a href="#Implementation-Configuration">4.10. Configuration</a></li>
 </ul>
 </li>
 <li><a href="#documentation">5. Documentation</a>
@@ -944,7 +948,224 @@ This saves both memory and disc writes.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="crud-for-code-divesession-code-objects"><a class="link" href="#crud-for-code-divesession-code-objects">4.3. CRUD for <code>DiveSession</code> objects</a></h3>
+<h3 id="new-feature-planning-mode-with-code-portover-code-capability"><a class="link" href="#new-feature-planning-mode-with-code-portover-code-capability">4.3. New Feature: Planning Mode (with <code>portover</code> capability)</a></h3>
+<div class="paragraph">
+<p>From our verbal surveys with test users and from our user stories, we have decided to implement a Planning mode in order for users to plan their
+dives ahead of their trips safely without worrying about corrupting their current data.</p>
+</div>
+<div class="sect3">
+<h4 id="design-considerations-3"><a class="link" href="#design-considerations-3">4.3.1. Design Considerations</a></h4>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Alternative 1 (current choice)</strong>:
+When in planning mode, a counter increments every time a command is called. In addition, there is now a state called planning mode, which shows true if in planning mode and false if in normal mode.<br></p>
+<div class="ulist">
+<ul>
+<li>
+<p>When the user chooses to exit and enter <code>normalmode</code>,
+the underlying method calls for a <code>undo</code> method and decreases the counter. This will repeat until the counter is zero, whereby then the state of the machine will change back to normal mode.<br></p>
+</li>
+<li>
+<p>If the user decides to call <code>portover</code>, the counter is simply reset to 0 and the state of the machine is changed back to normal mode.</p>
+</li>
+<li>
+<p><strong>Pros:</strong> Uses a method that is already present, <code>undo</code>. This means there won&#8217;t be two implementations of the same method and follows the
+single responsibility principle.</p>
+</li>
+<li>
+<p><strong>Cons:</strong></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Alternative 2</strong>: Create a temporary Stack to store commands instead of just a counter.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: All types of commands can now be used in planning mode, and not just <code>add</code>, <code>delete</code> and <code>edit</code></p>
+</li>
+<li>
+<p>Cons: Extra implementations and considerations have to be taken into account. This might increase coupling between classes.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="sorting-of-data"><a class="link" href="#sorting-of-data">4.4. Sorting of data</a></h3>
+<div class="paragraph">
+<p>We have considered that once a user has a considerable number of dives registered in the app, the user would potentially have difficulty finding dives,
+even with the <code>find</code> function. (as many dives can have the same parameters such as location) To simplify the app usage, this command allows for users to decide the way
+that the data shown to them is organised.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="design-considerations-4"><a class="link" href="#design-considerations-4">4.5. Design Considerations</a></h3>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Current implementation</strong>:</p>
+</li>
+<li>
+<p><strong>Potential improvement to the feature 1</strong>: Add a <code>sortby</code> CLI command.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Method to implement:<br>
+<strong>Step 1:</strong> Create a new Command<a id="GetStartedProgramming-RemarkCommand"></a> with a Command Parser that reads in the Command Prefix and a
+[KEYWORD], which will dictate the parameter to sort by. The Command and Parser file should look like below:</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/sortbyparser.png" alt="sortbyparser" width="600">
+</div>
+<div class="title">Figure 10. Command Parser File Sample</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/sortbyclass.png" alt="sortbyclass" width="600">
+</div>
+<div class="title">Figure 11. Command Class File Sample</div>
+</div>
+<div class="paragraph">
+<p>Optional: Create a enum with the parameters you want to sort the data by (E.g Time, Location and Duration)</p>
+</div>
+<div class="paragraph">
+<p><strong><em>Sample Enum</em></strong><br>
+<em>public enum SortCategory {<br>
+TIME, LOCATION, DURATION<br>
+}</em></p>
+</div>
+<div class="paragraph">
+<p><strong>Step 2:</strong> Create a sort method preferably in a separate utils class. This method should take in the parameter to sort by. (It will be easier and
+less prone to mistakes if Step 2 was used) The corresponding comparators should be created. The sort method should look something like b</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/sortmethod.png" alt="sortmethod" width="500">
+</div>
+<div class="title">Figure 12. Sort method Sample</div>
+</div>
+<div class="paragraph">
+<p><strong>Step 3:</strong> Ensure that the divelog refreshes / reflects the newly sorted. You can do this by calling for the sort
+method after every add or edit command. You can also create a new event in commons.events.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Once implemented, to increase the number of parameters / methods to sort the data by, simply create a new corresponding comparator, add the respective prefixes the parse for, and to increase the number of parameters included in the Enum file.</p>
+</li>
+<li>
+<p>Cons: Can be troublesome to implement in the beginning.</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Potential improvement to the feature 2</strong>: Reverse the current order by calling <code>reverseorder</code></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Method to implement: Simply reverse the comparator in the sorting methods, which is located in the</p>
+</li>
+<li>
+<p>Pros: Improved usability</p>
+</li>
+<li>
+<p>Cons: Increased difficulty to maintain</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="new-parameters-conditions-in-dive-log"><a class="link" href="#new-parameters-conditions-in-dive-log">4.6. New Parameters &amp; conditions in Dive Log</a></h3>
+<div class="sect3">
+<h4 id="timezone"><a class="link" href="#timezone">4.6.1. Timezone</a></h4>
+<div class="paragraph">
+<p>Considering that users would dive in many different parts of the world, we have taken the effort to implement a Timezone parameter to ease users in adding new dives into the Dive Log without the need to convert any time to Local time.<br>
+We have decided to utilise the format of UTC, given its universal usage around the world. The UTC timezones range from -12 to +12, including 0. Singapore lies in the timezone of UTC+8.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Alternative 1 (current choice)</strong>: When calculating Pressure Groups using TimeZone</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros:</p>
+</li>
+<li>
+<p>Cons:</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Alternative 2: </strong> Adopt Java SE 9&#8217;s java.time library</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: There are pre-built algorithms and methods in the library.</p>
+</li>
+<li>
+<p>Cons: Takes time to learn and to adopt the methods, which might not be efficient for our light usage.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="time-and-ourdate"><a class="link" href="#time-and-ourdate">4.6.2. Time and OurDate</a></h4>
+<div class="paragraph">
+<p>Time and OurDate are 2 of the new parameters in the Dive Log. In order to be able to calculate the Pressure Groups automatically,
+there has to be a time and date parameter. We have decided to create our own class.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Alternative 1 (current choice)</strong>: Use a 4 length String to contain time and 8 length String to contain date.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: When reading in data from the <code>ArgumentMultimap</code>, it requires very little effort in parsing. Also, the use of String allows for versatile typecasting into long, int, or Java SE 7&#8217;s SimpleDateFormat. Similarly, the use of String and long as main type allows for better versatility among different methods.</p>
+</li>
+<li>
+<p>Cons: Data needs to be parsed into Java SE 8&#8217;s java.date and Java SE 7&#8217;s SimpleDateFormat in order to calculate time differences. This means that there can potentially be many type conflicts. However, this problem is contained in a helper class <code>CompareUtils</code> which handles methods like <code>checkTimeDifference</code>, <code>getLocalDate</code> and <code>convertTimeToLocal</code>.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Alternative 2: </strong> Adopt Java SE 9&#8217;s java.time library</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: More volatile as the library contains many ready-made solutions. Also, java.time also allows for the easy implementation of <strong>local time</strong>, which is one of our improvements made to AB4.</p>
+</li>
+<li>
+<p>Cons: Takes time to learn and to adopt the methods, which might not be efficient for our light usage.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="crud-for-code-divesession-code-objects"><a class="link" href="#crud-for-code-divesession-code-objects">4.7. CRUD for <code>DiveSession</code> objects</a></h3>
 <div class="paragraph">
 <p>At its heart, the application is a dive log. The source code for this application was adopted from an addressbook application.
 The addressbook has a relatively simple set of rules, DiveLog on the other hand has a more complicated set of rules which have to be followed.
@@ -1006,7 +1227,7 @@ all calculations are complete that the system can make sure that the update is v
 <p>In terms of calculations, the pressure group properties of the dives themselves will mutate to support</p>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-3"><a class="link" href="#design-considerations-3">4.3.1. Design Considerations</a></h4>
+<h4 id="design-considerations-5"><a class="link" href="#design-considerations-5">4.7.1. Design Considerations</a></h4>
 <div class="paragraph">
 <p>Upon failure of calculations it is important that the divelog remains in a consistent state. For instance, when updating the dive log if after adding a dive we see that
 it is causing issues in the dive log, or if we edit a dive to have overlapping time periods with another dive, the divelog should roll back the latest transaction and throw an error.
@@ -1093,7 +1314,7 @@ Furthermore, most divers will not have more than 100 dives.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="localized-units"><a class="link" href="#localized-units">4.4. Localized Units</a></h3>
+<h3 id="localized-units"><a class="link" href="#localized-units">4.8. Localized Units</a></h3>
 <div class="paragraph">
 <p>As of <code>v1.3</code>, a <code>set_units</code> command was added. This allows the user to switch between meters and feet.
 The implementation of this command involves altering the <code>ApplicationState</code>. Once the <code>ApplicationState</code>
@@ -1104,14 +1325,14 @@ Internally all the units are stored as meters. This choice was largely made to k
 </div>
 </div>
 <div class="sect2">
-<h3 id="logging"><a class="link" href="#logging">4.5. Logging</a></h3>
+<h3 id="logging"><a class="link" href="#logging">4.9. Logging</a></h3>
 <div class="paragraph">
 <p>We are using <code>java.util.logging</code> package for logging. The <code>LogsCenter</code> class is used to manage the logging levels and logging destinations.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 4.6, &#8220;Configuration&#8221;</a>)</p>
+<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 4.10, &#8220;Configuration&#8221;</a>)</p>
 </li>
 <li>
 <p>The <code>Logger</code> for a class can be obtained using <code>LogsCenter.getLogger(Class)</code> which will log messages according to the specified logging level</p>
@@ -1142,7 +1363,7 @@ Internally all the units are stored as meters. This choice was largely made to k
 </div>
 </div>
 <div class="sect2">
-<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">4.6. Configuration</a></h3>
+<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">4.10. Configuration</a></h3>
 <div class="paragraph">
 <p>Certain properties of the application can be controlled (e.g. App name, logging level) through the configuration file (default: <code>config.json</code>).</p>
 </div>
@@ -1208,7 +1429,7 @@ Alternatively, you can download the AsciiDoc plugin for IntelliJ, which allows y
 <div class="content">
 <img src="images/chrome_save_as_pdf.png" alt="chrome save as pdf" width="300">
 </div>
-<div class="title">Figure 10. Saving documentation as PDF files in Chrome</div>
+<div class="title">Figure 13. Saving documentation as PDF files in Chrome</div>
 </div>
 </div>
 <div class="sect2">
@@ -1552,7 +1773,7 @@ b. Require developers to download those libraries manually (this creates extra w
 <p>First, add small local-impact (i.e. the impact of the change does not go beyond the component) enhancements to one component at a time. Some suggestions are given in <a href="#GetStartedProgramming-EachComponent">Section A.1, &#8220;Improving each component&#8221;</a>.</p>
 </li>
 <li>
-<p>Next, add a feature that touches multiple components to learn how to implement an end-to-end feature across all components. <a href="#GetStartedProgramming-RemarkCommand">Section A.2, &#8220;Creating a new command: <code>remark</code>&#8221;</a> explains how to go about adding such a feature.</p>
+<p>Next, add a feature that touches multiple components to learn how to implement an end-to-end feature across all components. <a href="#GetStartedProgramming-RemarkCommand">[GetStartedProgramming-RemarkCommand]</a> explains how to go about adding such a feature.</p>
 </li>
 </ol>
 </div>
@@ -2750,7 +2971,7 @@ Expected: Similar to previous.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="timezone"><a class="link" href="#timezone">H.4.2. Timezone</a></h4>
+<h4 id="timezone-2"><a class="link" href="#timezone-2">H.4.2. Timezone</a></h4>
 <div class="paragraph">
 <p>The timeZone class consists of a Integer (ranging from -12 to +12). This integer is dependent on the user input, which is the timezone in the format of UTC. If there are no integers in this string, there will be an exception thrown.</p>
 </div>
@@ -2805,4 +3026,4 @@ This method returns a long type of length 12, in the format of <em>[DDMMYYYYHHMM
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-11 12:22:04 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-11 13:38:26 UTC</div></div></div></body></html>
