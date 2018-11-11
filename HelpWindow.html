@@ -14,21 +14,21 @@
 <li><a href="#Features">3. Features</a>
 <ul class="sectlevel2">
 <li><a href="#viewing-help-code-help-code">3.1. Viewing help : <code>help</code></a></li>
-<li><a href="#adding-a-dive-session-code-add-code">3.2. Adding a dive session: <code>add</code></a></li>
-<li><a href="#listing-all-dives-code-list-code">3.3. Listing all dives : <code>list</code></a></li>
+<li><a href="#Add">3.2. Adding a dive session: <code>add</code></a></li>
+<li><a href="#List">3.3. Listing all dives : <code>list</code></a></li>
 <li><a href="#edit">3.4. Editing a dive : <code>edit</code></a></li>
 <li><a href="#set_units">3.5. Setting display units <code>set_units</code></a></li>
 <li><a href="#find">3.6. Locating dives by location: <code>find</code></a></li>
-<li><a href="#deleting-a-dive-code-delete-code">3.7. Deleting a dive : <code>delete</code></a></li>
-<li><a href="#selecting-a-divesession-code-select-code">3.8. Selecting a diveSession : <code>select</code></a></li>
-<li><a href="#listing-entered-commands-code-history-code">3.9. Listing entered commands : <code>history</code></a></li>
+<li><a href="#Delete">3.7. Deleting a dive : <code>delete</code></a></li>
+<li><a href="#Select">3.8. Selecting a diveSession : <code>select</code></a></li>
+<li><a href="#History">3.9. Listing entered commands : <code>history</code></a></li>
 <li><a href="#undo">3.10. Undoing previous command : <code>undo</code></a></li>
-<li><a href="#redoing-the-previously-undone-command-code-redo-code">3.11. Redoing the previously undone command : <code>redo</code></a></li>
-<li><a href="#clearing-all-entries-code-clear-code">3.12. Clearing all entries : <code>clear</code></a></li>
+<li><a href="#redo">3.11. Redoing the previously undone command : <code>redo</code></a></li>
+<li><a href="#clear">3.12. Clearing all entries : <code>clear</code></a></li>
 <li><a href="#setting-parameters-to-sort-dives-code-sortby-code-a-id-sortby-a-coming-in-v2-0">3.13. Setting parameters to sort dives : <code>sortby</code> <a id="sortby"></a> [coming in V2.0]</a></li>
-<li><a href="#planning-mode-code-newplan-code-or-code-normalmode-code">3.14. Planning Mode : <code>newplan</code> or <code>normalmode</code></a></li>
-<li><a href="#port-files-from-planning-mode-to-normal-mode-code-portover-code">3.15. Port files from Planning Mode to normal mode : <code>portover</code></a></li>
-<li><a href="#exiting-the-program-code-exit-code">3.16. Exiting the program : <code>exit</code></a></li>
+<li><a href="#newplan">3.14. Planning Mode : <code>newplan</code> or <code>normalmode</code></a></li>
+<li><a href="#portover">3.15. Port files from Planning Mode to normal mode : <code>portover</code></a></li>
+<li><a href="#exit">3.16. Exiting the program : <code>exit</code></a></li>
 <li><a href="#saving-the-data">3.17. Saving the data</a></li>
 </ul>
 </li>
@@ -41,25 +41,22 @@
 <h2 id="introduction"><a class="link" href="#introduction">1. Introduction</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Divelog is a digital dive log for planning and tracking dives that aims to simplify safe dive planning,logging and calculations.
+<p>Divelog is a digital dive log for planning and tracking dives that aims to simplify safe dive planning, logging and calculations.
 Divelog provides a simple way for underwater divers to input details of their dives such as the time they spent at a particular depth, and Divelog will keep track of their nitrogen levels.
 This allows divers to plan their next trip safely.<br></p>
 </div>
 <div class="paragraph">
-<p>We have adopted the <a href="#PADI">[PADI]</a> dive tables standards to calculate pressure groups for individual dives, whether the dive is the first dive
-or a repeat dive of the day.</p>
+<p>We have adopted the <a href="#PADI">[PADI]</a> dive tables standards to calculate pressure groups for individual dives. In addition, we are also able to determine if the dive is the first dive or a repeat dive for the day.</p>
 </div>
 <div class="paragraph">
-<p>Pressure groups are a letter between A to Z which mark the nitrogen
-concentration within a diver ("A" corresponds to a scenario where the diver is almost free of nitrogen).
-As of v1.4, the pressure groups are automatically calculated accross all dives,
-all one needs to enter is the depth and time of the the dive and the pressure groups of all dives are automatically updated.
-The system also will verify the dives are safe before letting you add or edit them. This is to help ensure your safety.
+<p>Pressure groups are made up of an alphabet, between A to Z, which marks the nitrogen concentration within a diver ("A" corresponds to a scenario where the diver is almost free of nitrogen, whilst "Z" corresponds to a scenario where the diver has dangerously excess of Nitrogen).
+As of v1.4, the pressure groups are automatically calculated across all dives. You only need to enter the location, depth and the time of the the dive. Following which, the pressure groups of all dives are automatically calculated and updated.
+The system will also verify that the dives are safe before allowing you to add and/or edit the dives. This is to ensure your safety.
 We are still working on the sortby
 <code><a href="#sortby">[sortby]</a></code> feature coming in the upcoming release v2.0.<br></p>
 </div>
 <div class="paragraph">
-<p>For more information on pressure groups (whether you are a recreational diver or looking to become one), you can find out more over at <code><a href="#pressure_groups">Section 4, &#8220;About Pressure Groups in recreational diving&#8221;</a></code> and  <code><a href="#FAQ">Section 5, &#8220;FAQ&#8221;</a></code>.</p>
+<p>For more information on pressure groups, you can find out more over at <code><a href="#pressure_groups">Section 4, &#8220;About Pressure Groups in recreational diving&#8221;</a></code> and  <code><a href="#FAQ">Section 5, &#8220;FAQ&#8221;</a></code>.</p>
 </div>
 </div>
 </div>
@@ -97,7 +94,7 @@ e.g. typing <strong><code>help</code></strong> and pressing <kbd>Enter</kbd> wil
 </div>
 <div class="paragraph">
 <p> <details><summary> 
-View screenshot for location of command box
+Click to view screenshot for location of command box
  </summary><div> 
 image::UGSS_Ui_command.png[width="800"]
 Diagram 2: Command Box location
@@ -139,7 +136,7 @@ Diagram 2: Command Box location
 </div>
 </li>
 <li>
-<p>Parameters can be in any order</p>
+<p>Parameters can be entered in any order</p>
 <div class="ulist">
 <ul>
 <li>
@@ -165,7 +162,7 @@ Diagram 2: Command Box location
 </div>
 <div class="paragraph">
 <p> <details><summary> 
-View the flow for the help guide
+Click here to view the screenshots to open help within the application
  </summary><div> </p>
 </div>
 <div class="imageblock">
@@ -201,7 +198,7 @@ You can close the guide by closing it. This can be done by clicking on the X on 
 </div>
 <div class="paragraph">
 <p> <details><summary> 
-View the screenshot for how to close the help guide.
+Click here to view the screenshot on how to close the help window when open within the application
  </summary><div> </p>
 </div>
 <div class="imageblock">
@@ -217,7 +214,7 @@ View the screenshot for how to close the help guide.
 </div>
 </div>
 <div class="sect2">
-<h3 id="adding-a-dive-session-code-add-code"><a class="link" href="#adding-a-dive-session-code-add-code">3.2. Adding a dive session: <code>add</code></a></h3>
+<h3 id="Add"><a class="link" href="#Add">3.2. Adding a dive session: <code>add</code></a></h3>
 <div class="paragraph">
 <p>Use this command to adds your new dive session to the Dive Log.</p>
 </div>
@@ -350,7 +347,7 @@ the program will not be able to add your dive.
 </table>
 </div>
 <div class="sect2">
-<h3 id="listing-all-dives-code-list-code"><a class="link" href="#listing-all-dives-code-list-code">3.3. Listing all dives : <code>list</code></a></h3>
+<h3 id="List"><a class="link" href="#List">3.3. Listing all dives : <code>list</code></a></h3>
 <div class="paragraph">
 <p>To display all the dives that you have previously recorded, <code>list</code> shows a list of all dives in the dive log.<br>
 To change the manner in which your dives are ordered, view <code><a href="#sortby">[sortby]</a></code></p>
@@ -360,7 +357,7 @@ To change the manner in which your dives are ordered, view <code><a href="#sortb
 </div>
 <div class="paragraph">
 <p> <details><summary> 
-View screenshot for list
+Click here to see the screenshot for list
  </summary><div> </p>
 </div>
 <div class="imageblock">
@@ -468,7 +465,7 @@ For a set of reasons why an edit may fail please take a look at <a href="#add">[
 <div class="sect2">
 <h3 id="set_units"><a class="link" href="#set_units">3.5. Setting display units <code>set_units</code></a></h3>
 <div class="paragraph">
-<p>If you&#8217;re not used to the metric or impreial system, <code>set_units</code>
+<p>If you&#8217;re not used to the metric or imperial system, <code>set_units</code>
 switches between meters and feet. (App defaults to meters) All data displayed will be automatically and accurately converted <br>
 Format: <code>set_units meters|feet</code><br></p>
 </div>
@@ -529,7 +526,7 @@ Returns <code>Dive at Bali</code></p>
 </div>
 <div class="paragraph">
 <p> <details><summary> 
-View screenshot for example of a successful find
+Click here to view the screenshot for an example of a successful find
  </summary><div> </p>
 </div>
 <div class="imageblock">
@@ -543,7 +540,7 @@ View screenshot for example of a successful find
 </div>
 </div>
 <div class="sect2">
-<h3 id="deleting-a-dive-code-delete-code"><a class="link" href="#deleting-a-dive-code-delete-code">3.7. Deleting a dive : <code>delete</code></a></h3>
+<h3 id="Delete"><a class="link" href="#Delete">3.7. Deleting a dive : <code>delete</code></a></h3>
 <div class="paragraph">
 <p>Deletes the specified dive from the Dive Log.<br>
 Format: <code>delete INDEX</code></p>
@@ -584,7 +581,7 @@ Deletes the 1st dive in the results of the <code>find</code> command.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="selecting-a-divesession-code-select-code"><a class="link" href="#selecting-a-divesession-code-select-code">3.8. Selecting a diveSession : <code>select</code></a></h3>
+<h3 id="Select"><a class="link" href="#Select">3.8. Selecting a diveSession : <code>select</code></a></h3>
 <div class="paragraph">
 <p>Selects the dive identified by the index number used in the displayed dive list.<br>
 Format: <code>select INDEX</code></p>
@@ -631,7 +628,7 @@ Selects the 1st dive in the results of the <code>find</code> command.</p>
 </div>
 <div class="paragraph">
 <p> <details><summary> 
-View screenshot for a successful select
+Click here to view the screenshot for a successful select
  </summary><div> </p>
 </div>
 <div class="imageblock">
@@ -647,7 +644,7 @@ View screenshot for a successful select
 </div>
 </div>
 <div class="sect2">
-<h3 id="listing-entered-commands-code-history-code"><a class="link" href="#listing-entered-commands-code-history-code">3.9. Listing entered commands : <code>history</code></a></h3>
+<h3 id="History"><a class="link" href="#History">3.9. Listing entered commands : <code>history</code></a></h3>
 <div class="paragraph">
 <p>Forgot what command you did just now and corrupted your data? Find our what command exactly did you execute
  before you correct your data!<br></p>
@@ -671,7 +668,7 @@ View screenshot for a successful select
 </div>
 <div class="paragraph">
 <p> <details><summary> 
-View screenshot for a successful history command
+Click here to view the screenshot for a successful history command
  </summary><div> </p>
 </div>
 <div class="imageblock">
@@ -734,7 +731,7 @@ The <code>undo</code> command fails as there are no undoable commands executed p
 </div>
 </div>
 <div class="sect2">
-<h3 id="redoing-the-previously-undone-command-code-redo-code"><a class="link" href="#redoing-the-previously-undone-command-code-redo-code">3.11. Redoing the previously undone command : <code>redo</code></a></h3>
+<h3 id="redo"><a class="link" href="#redo">3.11. Redoing the previously undone command : <code>redo</code></a></h3>
 <div class="paragraph">
 <p>Ever thought of undo-ing a <code>undo</code> command? <code>Redo</code>
 reverses the most recent <code>undo</code> command.<br>
@@ -767,7 +764,7 @@ The <code>redo</code> command fails as there are no <code>undo</code> commands e
 </div>
 </div>
 <div class="sect2">
-<h3 id="clearing-all-entries-code-clear-code"><a class="link" href="#clearing-all-entries-code-clear-code">3.12. Clearing all entries : <code>clear</code></a></h3>
+<h3 id="clear"><a class="link" href="#clear">3.12. Clearing all entries : <code>clear</code></a></h3>
 <div class="paragraph">
 <p>This command, as the name suggests, clears Dive Log of <strong>all</strong> your previous dive logs and
 gives you a clean start to use Dive Log again!<br></p>
@@ -832,7 +829,7 @@ WARNING: You can only use the specific keywords below.</p>
 </table>
 </div>
 <div class="sect2">
-<h3 id="planning-mode-code-newplan-code-or-code-normalmode-code"><a class="link" href="#planning-mode-code-newplan-code-or-code-normalmode-code">3.14. Planning Mode : <code>newplan</code> or <code>normalmode</code></a></h3>
+<h3 id="newplan"><a class="link" href="#newplan">3.14. Planning Mode : <code>newplan</code> or <code>normalmode</code></a></h3>
 <div class="paragraph">
 <p>The planning mode is a temporary space for you to plan trips and to simulate dives. This is especially important if you
  are planning on a multiple day diving trip!<br>
@@ -859,7 +856,7 @@ When you exit the planning mode, you will return to the state before you entered
 </div>
 </div>
 <div class="sect2">
-<h3 id="port-files-from-planning-mode-to-normal-mode-code-portover-code"><a class="link" href="#port-files-from-planning-mode-to-normal-mode-code-portover-code">3.15. Port files from Planning Mode to normal mode : <code>portover</code></a></h3>
+<h3 id="portover"><a class="link" href="#portover">3.15. Port files from Planning Mode to normal mode : <code>portover</code></a></h3>
 <div class="paragraph">
 <p>When you have finished your plan and found the perfect set of dives, simply input the <code>portover</code> command and
 the app will port all planning data into data in the normal mode.</p>
@@ -878,7 +875,7 @@ You cannot use this command in <code>normalmode</code> as there are no planning 
 </div>
 </div>
 <div class="sect2">
-<h3 id="exiting-the-program-code-exit-code"><a class="link" href="#exiting-the-program-code-exit-code">3.16. Exiting the program : <code>exit</code></a></h3>
+<h3 id="exit"><a class="link" href="#exit">3.16. Exiting the program : <code>exit</code></a></h3>
 <div class="paragraph">
 <p>Finished using Dive Log? This command shuts down Dive Log, and saves your new dive session data for your next use.<br></p>
 </div>
@@ -961,7 +958,7 @@ The Recreational Dive Planner Table is actually three tables linked together. Ea
 </div>
 <div class="paragraph">
 <p><strong>Q</strong>: Where can I find out more about PADI dive tables? <a id="PADI"></a><br>
-<strong>A</strong>: The 36-page long Instructions for Use official document can be found <a href="https://elearning.padi.com/company0/tools/RDP%20InsforUseMet.pdf" class="bare">https://elearning.padi.com/company0/tools/RDP%20InsforUseMet.pdf</a></p>
+<strong>A</strong>: The 36-page long Instructions for Use official document can be found <a href="https://elearning.padi.com/company0/tools/RDP%20InsforUseMet.pdf">Padi&#8217;s Website</a>.</p>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-11 17:10:51 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-11 17:58:52 UTC</div></div></div></body></html>
