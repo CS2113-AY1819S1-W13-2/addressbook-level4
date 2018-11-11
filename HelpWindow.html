@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]--><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="Asciidoctor 1.5.6.1"><title>Dive Log - User Guide</title><link rel="stylesheet" href="stylesheets/gh-pages.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="stylesheets/coderay-asciidoctor.css"></head><body class="article"><div id="header"><h1>Dive Log - User Guide</h1></div><div id="content"><div id="preamble">
+<link rel="stylesheet" href="stylesheets/coderay-asciidoctor.css"></head><body class="article"><div id="site-header"><nav class="navbar navbar-light bg-light"><div class="container"><a class="navbar-brand" href="index.html">DiveLog</a><ul class="navbar-nav"><li class="nav-item"></li><a class="nav-link active" href="UserGuide.html">User Guide</a><li class="nav-item"></li><a class="nav-link" href="DeveloperGuide.html">Developer Guide</a></ul></div></nav></div><div id="header"><h1>Dive Log - User Guide</h1></div><div id="content"><div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
 <p>By: <code>Team CS2113-AY1819S1-W13-2</code>      Since: <code>Aug 2018</code>      Licence: <code>MIT</code></p>
@@ -14,7 +14,7 @@
 <li><a href="#Features">3. Features</a>
 <ul class="sectlevel2">
 <li><a href="#viewing-help-code-help-code">3.1. Viewing help : <code>help</code></a></li>
-<li><a href="#adding-a-dive-session-code-add-code">3.2. Adding a dive session: <code>add</code></a></li>
+<li><a href="#add">3.2. Adding a dive session: <code>add</code></a></li>
 <li><a href="#listing-all-dives-code-list-code">3.3. Listing all dives : <code>list</code></a></li>
 <li><a href="#editing-a-dive-code-edit-code">3.4. Editing a dive : <code>edit</code></a></li>
 <li><a href="#setting-display-units-code-set_units-code">3.5. Setting display units <code>set_units</code></a></li>
@@ -41,18 +41,22 @@
 <h2 id="introduction"><a class="link" href="#introduction">1. Introduction</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Divelog is a digital dive log for tracking dives that aims to simplify safe dive planning,logging and calculations.
+<p>Divelog is a digital dive log for planning and tracking dives that aims to simplify safe dive planning,logging and calculations.
 Divelog provides a simple way for underwater divers to input details of their dives such as the time they spent at a particular depth, and Divelog will keep track of their nitrogen levels.
 This allows divers to plan their next trip safely.<br></p>
 </div>
 <div class="paragraph">
 <p>We have adopted the <a href="#PADI">[PADI]</a> dive tables standards to calculate pressure groups for individual dives, whether the dive is the first dive
-or a repeat dive of the day.
-Pressure groups are denoted by a letter between A to Z which marks the nitrogen
-concentration in a diver&#8217;s body (A Pressure group of "A" shows that the diver&#8217;s body is almost free of nitrogen).
-As of v1.4, the pressure group is automatically calculated within a dive, all one needs to enter is their
-current pressure group and their ending pressure group is automatically updated.
-<br></p>
+or a repeat dive of the day.</p>
+</div>
+<div class="paragraph">
+<p>Pressure groups are a letter between A to Z which mark the nitrogen
+concentration within a diver ("A" corresponds to a scenario where the diver is almost free of nitrogen).
+As of v1.4, the pressure groups are automatically calculated accross all dives,
+all one needs to enter is the depth and time of the the dive and the pressure groups of all dives are automatically updated.
+The system also will verify the dives are safe before letting you add or edit them. This is to help ensure your safety.
+We are still working on the sortby
+<code><a href="#sortby">[sortby]</a></code> feature coming in the upcoming release v2.0.<br></p>
 </div>
 <div class="paragraph">
 <p>For more information on pressure groups (whether you are a recreational diver or looking to become one), you can find out more over at <code><a href="#pressure_groups">Section 4, &#8220;About Pressure Groups in recreational diving&#8221;</a></code> and  <code><a href="#FAQ">Section 5, &#8220;FAQ&#8221;</a></code>.</p>
@@ -94,18 +98,10 @@ e.g. typing <strong><code>help</code></strong> and pressing <kbd>Enter</kbd> wil
 <div class="paragraph">
 <p> <details><summary> 
 View screenshot for location of command box
- </summary><div> </p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images/UGSS_Ui_command.png" alt="UGSS Ui command" width="800">
-</div>
-</div>
-<div class="paragraph">
-<p>Diagram 2: Command Box location</p>
-</div>
-<div class="paragraph">
-<p> </div></details> </p>
+ </summary><div> 
+image::UGSS_Ui_command.png[width="800"]
+Diagram 2: Command Box location
+ </div></details> </p>
 </div>
 </div>
 </div>
@@ -221,12 +217,12 @@ View the screenshot for how to close the help guide.
 </div>
 </div>
 <div class="sect2">
-<h3 id="adding-a-dive-session-code-add-code"><a class="link" href="#adding-a-dive-session-code-add-code">3.2. Adding a dive session: <code>add</code></a></h3>
+<h3 id="add"><a class="link" href="#add">3.2. Adding a dive session: <code>add</code></a></h3>
 <div class="paragraph">
 <p>Use this command to adds your new dive session to the Dive Log.</p>
 </div>
 <div class="paragraph">
-<p>Format: <code>add ds/DATE_STARTED ts/TIME_DIVE_STARTED de/DATE_ENDED te/TIME_DIVE_ENDED ss/SAFETY_STOP  d/DEPTH  l/LOCATION [pg/INITIAL_PRESSURE_GROUP]</code></p>
+<p>Format: <code>add ds/DATE_STARTED ts/TIME_DIVE_STARTED de/DATE_ENDED te/TIME_DIVE_ENDED ss/SAFETY_STOP  d/DEPTH  l/LOCATION</code></p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -245,26 +241,23 @@ the program will not be able to add your dive.
 <p>Put a <code>ts/</code> before the time started(24 hours format - HHMM), te/time ended (24 hours format - HHMM), d/depth (in metres), l/ location (location name), per dive at v1.0) (optional) and pg/initial pressure group.</p>
 </div>
 <div class="paragraph">
-<p>An important thing to note is that as of <code>v1.4</code>, the <code>pg/</code> argument is ignored for all dives except if it is the oldest dive in the logbook.</p>
+<p><em>Example:</em> <code>add ds/04082018 ts/0900 de/04082018  te/1020 ss/1015 d/15 l/Bukit Lagoon tz/+8</code></p>
 </div>
 <div class="paragraph">
-<p><em>Example:
-add ds/04082018 ts/0900 de/04082018  te/1020 ss/1015 d/15 l/Bukit Lagoon pg/C tz/+8</em></p>
+<p>A list of possible command flags is shown below.</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
 <caption class="title">Table 1. Table of Prefix and Data</caption>
 <colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
 </colgroup>
 <thead>
 <tr>
 <th class="tableblock halign-left valign-top">Data</th>
 <th class="tableblock halign-left valign-top">Prefix</th>
 <th class="tableblock halign-left valign-top">Example</th>
-<th class="tableblock halign-left valign-top">Remarks</th>
 </tr>
 </thead>
 <tbody>
@@ -272,37 +265,86 @@ add ds/04082018 ts/0900 de/04082018  te/1020 ss/1015 d/15 l/Bukit Lagoon pg/C tz
 <td class="tableblock halign-left valign-top"><p class="tableblock">Date started / Ended (DDMMYYYY)</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ds or de</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ds/04082018 or de/05082018</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Must be in ddMMyyyy format</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Time Started / Ended (HHMM)</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ts or te</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ts/0800 or te/0900</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Must be in 24-hr format</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Location</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">l</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">l/Sentosa</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Depth (integer value)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Depth (integer value). Depending on whether the app is set to use meters or feet, the value used will change.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">d</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">d/18</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Numbers only</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Initial Pressure Group (Character Value) <em>Note: this only updates the PG if its the oldest dive</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">pg</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">pg/A</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Only Characters from A to Z</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Timezone (in UTC)</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">tz</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">tz/+12 or tz/-5</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Prefix + or - followed by integers strictly from 0 to 12 inclusive + <em>Note: If timezone is UTC time, you can choose to input +0 or -0</em></p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Adding a command may fail for a variety of reasons. This is to ensure your safety during dives. As a rule of thumb some reasons why a dive may not be added include:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The dive puts you outside the safety guidelines given by padi (i.e. its too deep or long).</p>
+</li>
+<li>
+<p>The dive makes some other dives you take go out of padi&#8217;s safety guidelines.</p>
+</li>
+<li>
+<p>The dive timing overlaps with another dive.</p>
+</li>
+<li>
+<p>Issues with the way you entered the command.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>An important thing to note is that your safety stop time must be between your start and end time.</p>
+</div>
+<div class="paragraph">
+<p>If for instance you enter an invalid dive, the system will tell you that you have dived to deep. Some common error messages are shown below:</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 2. Common error messages (non-exhaustive list)</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Error Messages</th>
+<th class="tableblock halign-left valign-top">Cause</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The dive overlaps with another dive. Not updating the divelog.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">There is another dive which is occuring at the same time.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Dive is too deep and too long!!</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The dive you added is too long/deep given your current plans. This message is often accompanied by advice about how you can stay safe. Please follow it.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Invalid date format! (Not DDMMYYYY)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Date you entered is invalid. Make sure the date is in the form of DDMMYYYY</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Invalid time format! (Not HHMM)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Time entered is in invalid format.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Start and End date or time or Safety Stop Time are not in chronological order! Start Date should be earlier than End Date! Safety Stop should be between Start and End time"</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">You need to make sure that your start time is before your end time and safety stop comes inbetween.</p></td>
 </tr>
 </tbody>
 </table>
@@ -377,7 +419,7 @@ All data provided must comply to chronological order, meaning to say Date/Time S
 </table>
 </div>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 2. Table of Prefix and Data</caption>
+<caption class="title">Table 3. Table of Prefix and Data</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -412,17 +454,16 @@ All data provided must comply to chronological order, meaning to say Date/Time S
 <td class="tableblock halign-left valign-top"><p class="tableblock">d/18</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Initial Pressure Group (Character Value) <em>Note: this only updates the PG if its the oldest dive</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">pg</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">pg/A</p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Timezone (in UTC)</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">tz</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">tz/+12 or tz/-5</p></td>
 </tr>
 </tbody>
 </table>
+<div class="paragraph">
+<p>Like the <code>add</code> command, edit may fail for a variety of reasons. The same rules which apply for add apply for edit.
+For a set of reasons why an edit may fail please take a look at <a href="#add">Section 3.2, &#8220;Adding a dive session: <code>add</code>&#8221;</a>.</p>
+</div>
 </div>
 <div class="sect2">
 <h3 id="setting-display-units-code-set_units-code"><a class="link" href="#setting-display-units-code-set_units-code">3.5. Setting display units <code>set_units</code></a></h3>
@@ -436,10 +477,13 @@ Format: <code>set_units meters|feet</code><br></p>
 <div class="ulist">
 <ul>
 <li>
-<p>As of v1.3 it only updates the DISPLAY units, not the actual entered units.</p>
+<p>As of v1.4 it updates both the DISPLAY units and the actual entered units.</p>
 </li>
 <li>
 <p>The settings are not saved upon application restart.</p>
+</li>
+<li>
+<p>Internally, we store everything in meters, as a result the xml file produced will always be in meters.</p>
 </li>
 </ul>
 </div>
@@ -760,7 +804,7 @@ Performed an accidental <code>clear</code> of your precious data? Use <code>undo
 WARNING: You can only use the specific keywords below.</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
-<caption class="title">Table 3. Table of parameters available to sort by</caption>
+<caption class="title">Table 4. Table of parameters available to sort by</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -920,4 +964,4 @@ The Recreational Dive Planner Table is actually three tables linked together. Ea
 <strong>A</strong>: The 36-page long Instructions for Use official document can be found <a href="https://elearning.padi.com/company0/tools/RDP%20InsforUseMet.pdf" class="bare">https://elearning.padi.com/company0/tools/RDP%20InsforUseMet.pdf</a></p>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-10 17:09:16 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-11 12:22:04 UTC</div></div></div></body></html>
