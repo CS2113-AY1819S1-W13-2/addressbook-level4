@@ -16,6 +16,9 @@ This allows divers to plan their next trip safely.</p>
 <div class="paragraph">
 <p>Dive Log is able to calculate accurately the diver’s current Blood Nitrogen Composition, which is used to evaluate when it will be safe to dive again, and for how long.</p>
 </div>
+<div class="paragraph">
+<p>Dive Log is based on <a href="https://github.com/nusCS2113-AY1819S1/addressbook-level4">Addressbook level 4</a> and is developed as part of CS2113T project requirements.</p>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -37,17 +40,18 @@ If the user wants to transfer planning data to normal mode, the user can use the
 </li>
 <li>
 <p>Justification: This is a major feature of the app as divers often want to plan their dives ahead of their trips. This
-also helps to prevent the instance where divers cannot board a plane ride due to too high of a Nitrogen composition in the body.</p>
+also helps to prevent the instance where divers cannot board a plane ride due to too high of a Nitrogen composition in the body.
+<a href="https://www.leisurepro.com/blog/scuba-guides/flying-after-diving-how-long-should-you-wait/">&lt;Reference&gt;</a></p>
 </li>
 <li>
-<p>Highlights: This enhancement works across many different commands and will require understanding of every command class file
+<p>Highlights: This enhancement works across the different commands and will require understanding of every command class file
 in order to properly implement.</p>
 </li>
 </ul>
 </div>
 </li>
 <li>
-<p><strong>Minor enhancement</strong>: Created Time, OurDate parameters in a <code>DiveSession</code> and a helper class <code>CompareUtils</code> which contain methods to handle OurDate and Time. The two parameters
+<p><strong>Minor enhancement</strong>: Created Time, OurDate parameters in a <code>DiveSession</code> and improved helper class <code>CompareUtils</code> and <code>parserUtil</code> which contain methods to handle OurDate and Time. The two parameters
 are crucial in logging a dive, and methods in CompareUtils are also crucial in calculations of Pressure Groups which is the main feature of our app. <code>CompareUtils</code>
 contain methods that are used to help calculate Pressure Group.</p>
 </li>
@@ -74,7 +78,7 @@ contain methods that are used to help calculate Pressure Group.</p>
 <a href="https://github.com/CS2113-AY1819S1-W13-2/main/commit/f7199ced6950cfd8d16ae3ac5a61f0ad9fd48253">#3</a></p>
 </li>
 <li>
-<p>[UG] Tweaked the whole User Guide&#8217;s tone to sound more interactive
+<p>[UG] Tweaked the whole User Guide&#8217;s tone to a more interactive and friendly guide
 <a href="https://github.com/CS2113-AY1819S1-W13-2/main/commit/9f8e2a3e41224a95130cb3692ed1c914f9239fb7">#66</a> <a href="https://github.com/CS2113-AY1819S1-W13-2/main/pull/135">#135</a></p>
 </li>
 <li>
@@ -282,7 +286,10 @@ there has to be a time and date parameter. We have decided to create our own cla
 <p>Pros: When reading in data from the <code>ArgumentMultimap</code>, it requires very little effort in parsing. Also, the use of String allows for versatile typecasting into long, int, or Java SE 7&#8217;s SimpleDateFormat. Similarly, the use of String and long as main type allows for better versatility among different methods.</p>
 </li>
 <li>
-<p>Cons: Data needs to be parsed into Java SE 8&#8217;s java.date and Java SE 7&#8217;s SimpleDateFormat in order to calculate time differences. This means that there can potentially be many type conflicts. However, this problem is contained in a helper class <code>CompareUtils</code> which handles methods like <code>checkTimeDifference</code>, <code>getLocalDate</code> and <code>convertTimeToLocal</code>.</p>
+<p>Cons: Data needs to be parsed into Java SE 8&#8217;s java.date and Java SE 7&#8217;s SimpleDateFormat in order to
+calculate time differences. This means that there can potentially be many type conflicts. However, this
+ problem is contained in a helper class <code>CompareUtils</code> which handles methods like <code>checkTimeDifference</code> (returns the difference between 2 given time and date),
+  <code>getLocalDate</code>(gets the local date and time), <code>convertTimeToUtc</code>(converts given date into UTC timing) and <code>convertTimeToLocal</code>(converts a date into Local time and date).</p>
 </li>
 </ul>
 </div>
@@ -295,7 +302,8 @@ there has to be a time and date parameter. We have decided to create our own cla
 <p>Pros: More volatile as the library contains many ready-made solutions. Also, java.time also allows for the easy implementation of <strong>local time</strong>, which is one of our improvements made to AB4.</p>
 </li>
 <li>
-<p>Cons: Takes time to learn and to adopt the methods, which might not be efficient for our light usage.</p>
+<p>Cons: Takes time to learn and to adopt the methods, which might not be efficient for our light usage. Also, it will only be
+compatible with Java SE 9.</p>
 </li>
 </ul>
 </div>
@@ -320,7 +328,8 @@ that the data shown to them is organised.</p>
 or edited.</p>
 </li>
 <li>
-<p><strong>Potential improvement to the feature 1</strong>: Add a <code>sortby</code> CLI command.</p>
+<p><strong>Potential improvement to the feature 1</strong>: Add a <code>sortby</code> CLI command, which decides how to sort the data by. Potential
+additional methods are sorting by Name (alphabetical) or Duration of Dive.</p>
 <div class="ulist">
 <ul>
 <li>
@@ -391,13 +400,24 @@ a sample method shown in Figure 12. (above)</p>
 <p>Pros: Improved usability and thus better UX.</p>
 </li>
 <li>
-<p>Cons: Increased difficulty to maintain as the
-=== New Feature: Planning Mode (with <code>portover</code> capability)
-From our verbal surveys with test users and from our user stories, we have decided to implement a Planning mode in order for users to plan their
-dives ahead of their trips safely without worrying about corrupting their current data.</p>
+<p>Cons: Increased difficulty to maintain as the</p>
 </li>
 </ul>
 </div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="portover"><a class="link" href="#portover">New Feature: Planning Mode (with <code>portover</code> capability)</a></h3>
+<div class="paragraph">
+<p>From our verbal surveys with test users and from our user stories, we have decided to implement a Planning mode in order for users to plan their
+dives ahead of their trips safely without worrying about corrupting their current data. Below shows the activity diagram
+of the planning mode.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/planningAD.PNG" alt="planningAD" width="600">
+</div>
+<div class="title">Figure 4. Activity Diagram for planning mode</div>
 </div>
 <div class="sect3">
 <h4 id="design-considerations-2"><a class="link" href="#design-considerations-2">Design Considerations</a></h4>
@@ -425,7 +445,8 @@ the underlying method calls for a <code>undo</code> method and decreases the cou
 </div>
 </li>
 <li>
-<p><strong>Alternative 2</strong>: Create a temporary Stack to store commands instead of just a counter.</p>
+<p><strong>Alternative 2</strong>: Create a temporary Stack to store commands instead of just a counter. The stack is created when
+user enters planning mode, and is destroyed after exiting planning mode.</p>
 <div class="ulist">
 <ul>
 <li>
@@ -442,4 +463,4 @@ the underlying method calls for a <code>undo</code> method and decreases the cou
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-12 11:18:38 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-12 12:31:37 UTC</div></div></div></body></html>

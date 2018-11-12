@@ -1076,7 +1076,7 @@ dives safer. Thus our design considerations could be summed up as follows:</p>
 </li>
 <li>
 <p>Cons: More code will need to be written. Since <code>VersionedDiveLog</code> already maintains copies, it is just a matter of passing the reference of the temporary dive list to the system.
-Furthermore, most divers will not have more than 100 dives.</p>
+Furthermore, most divers will not have more than 100 dives.<br></p>
 </li>
 </ul>
 </div>
@@ -1090,7 +1090,14 @@ Furthermore, most divers will not have more than 100 dives.</p>
 <h3 id="portover"><a class="link" href="#portover">4.4. New Feature: Planning Mode (with <code>portover</code> capability)</a></h3>
 <div class="paragraph">
 <p>From our verbal surveys with test users and from our user stories, we have decided to implement a Planning mode in order for users to plan their
-dives ahead of their trips safely without worrying about corrupting their current data.</p>
+dives ahead of their trips safely without worrying about corrupting their current data. Below shows the activity diagram
+of the planning mode.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/planningAD.PNG" alt="planningAD" width="600">
+</div>
+<div class="title">Figure 10. Activity Diagram for planning mode</div>
 </div>
 <div class="sect3">
 <h4 id="design-considerations-4"><a class="link" href="#design-considerations-4">4.4.1. Design Considerations</a></h4>
@@ -1118,7 +1125,8 @@ the underlying method calls for a <code>undo</code> method and decreases the cou
 </div>
 </li>
 <li>
-<p><strong>Alternative 2</strong>: Create a temporary Stack to store commands instead of just a counter.</p>
+<p><strong>Alternative 2</strong>: Create a temporary Stack to store commands instead of just a counter. The stack is created when
+user enters planning mode, and is destroyed after exiting planning mode.</p>
 <div class="ulist">
 <ul>
 <li>
@@ -1150,7 +1158,8 @@ that the data shown to them is organised.</p>
 or edited.</p>
 </li>
 <li>
-<p><strong>Potential improvement to the feature 1</strong>: Add a <code>sortby</code> CLI command.</p>
+<p><strong>Potential improvement to the feature 1</strong>: Add a <code>sortby</code> CLI command, which decides how to sort the data by. Potential
+additional methods are sorting by Name (alphabetical) or Duration of Dive.</p>
 <div class="ulist">
 <ul>
 <li>
@@ -1167,13 +1176,13 @@ or edited.</p>
 <div class="content">
 <img src="images/sortbyparser.png" alt="sortbyparser" width="600">
 </div>
-<div class="title">Figure 10. Command Parser File Sample</div>
+<div class="title">Figure 11. Command Parser File Sample</div>
 </div>
 <div class="imageblock">
 <div class="content">
 <img src="images/sortbyclass.png" alt="sortbyclass" width="600">
 </div>
-<div class="title">Figure 11. Command Class File Sample</div>
+<div class="title">Figure 12. Command Class File Sample</div>
 </div>
 <div class="paragraph">
 <p>Optional: Create a enum with the parameters you want to sort the data by (E.g Time, Location and Duration)</p>
@@ -1192,7 +1201,7 @@ less prone to mistakes if Step 2 was used) The corresponding comparators should 
 <div class="content">
 <img src="images/sortmethod.png" alt="sortmethod" width="500">
 </div>
-<div class="title">Figure 12. Sort method Sample</div>
+<div class="title">Figure 13. Sort method Sample</div>
 </div>
 <div class="paragraph">
 <p><strong>Step 3:</strong> Ensure that the divelog refreshes / reflects the newly sorted. You can do this by calling for the sort
@@ -1284,7 +1293,10 @@ there has to be a time and date parameter. We have decided to create our own cla
 <p>Pros: When reading in data from the <code>ArgumentMultimap</code>, it requires very little effort in parsing. Also, the use of String allows for versatile typecasting into long, int, or Java SE 7&#8217;s SimpleDateFormat. Similarly, the use of String and long as main type allows for better versatility among different methods.</p>
 </li>
 <li>
-<p>Cons: Data needs to be parsed into Java SE 8&#8217;s java.date and Java SE 7&#8217;s SimpleDateFormat in order to calculate time differences. This means that there can potentially be many type conflicts. However, this problem is contained in a helper class <code>CompareUtils</code> which handles methods like <code>checkTimeDifference</code>, <code>getLocalDate</code> and <code>convertTimeToLocal</code>.</p>
+<p>Cons: Data needs to be parsed into Java SE 8&#8217;s java.date and Java SE 7&#8217;s SimpleDateFormat in order to
+calculate time differences. This means that there can potentially be many type conflicts. However, this
+ problem is contained in a helper class <code>CompareUtils</code> which handles methods like <code>checkTimeDifference</code> (returns the difference between 2 given time and date),
+  <code>getLocalDate</code>(gets the local date and time), <code>convertTimeToUtc</code>(converts given date into UTC timing) and <code>convertTimeToLocal</code>(converts a date into Local time and date).</p>
 </li>
 </ul>
 </div>
@@ -1297,7 +1309,8 @@ there has to be a time and date parameter. We have decided to create our own cla
 <p>Pros: More volatile as the library contains many ready-made solutions. Also, java.time also allows for the easy implementation of <strong>local time</strong>, which is one of our improvements made to AB4.</p>
 </li>
 <li>
-<p>Cons: Takes time to learn and to adopt the methods, which might not be efficient for our light usage.</p>
+<p>Cons: Takes time to learn and to adopt the methods, which might not be efficient for our light usage. Also, it will only be
+compatible with Java SE 9.</p>
 </li>
 </ul>
 </div>
@@ -1360,7 +1373,7 @@ in the figure below.</p>
 <div class="content">
 <img src="images/Colour_gradient.png" alt="Colour gradient" width="600">
 </div>
-<div class="title">Figure 13. Colour Gradient Chart</div>
+<div class="title">Figure 14. Colour Gradient Chart</div>
 </div>
 <div class="ulist">
 <ul>
@@ -1502,7 +1515,7 @@ Alternatively, you can download the AsciiDoc plugin for IntelliJ, which allows y
 <div class="content">
 <img src="images/chrome_save_as_pdf.png" alt="chrome save as pdf" width="300">
 </div>
-<div class="title">Figure 14. Saving documentation as PDF files in Chrome</div>
+<div class="title">Figure 15. Saving documentation as PDF files in Chrome</div>
 </div>
 </div>
 <div class="sect2">
@@ -2295,4 +2308,4 @@ Expected: Similar to previous.</p>
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-12 11:18:37 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-12 12:31:37 UTC</div></div></div></body></html>
