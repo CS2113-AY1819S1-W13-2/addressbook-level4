@@ -204,7 +204,10 @@ are supposed to be returned and adds colour to it.</p>
 <p><strong>Current implementation</strong>: When the pressure group returned the the <code>BrowserPanel</code> for display to the user, the colour is changed by
 changing its CSS style. The colour is chosen from green [<code>#0FFF0F</code>] to yellow [<code>#F5FF07</code>] to red [<code>#FF0000</code>]. The colour are in order
 of normal to moderate and finally, dangerous amount of nitrogen in the blood of the user or their pressure group. The colours are seen
-in the figure below.</p>
+in the Figure 14 below.
+As seen in the implementation below (Figure 15), once the <code>Application State</code> is updated, a <code>selectChangedEvent</code> is posted to the <code>EventsCenter</code>. The
+<code>EventsCenter</code> then issues a call to check the <code>checkPressureGrp()</code> to the <code>BrowserPanel</code> and updates the CSS of the pressure group. It will
+then re-render the UI to reflect the new CSS through <code>getStyleClass()</code>.</p>
 <div class="ulist">
 <ul>
 <li>
@@ -223,6 +226,12 @@ in the figure below.</p>
 <img src="../images/Colour_gradient.png" alt="Colour gradient" width="600">
 </div>
 <div class="title">Figure 1. Colour Gradient Chart</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/setColourDiagram.png" alt="setColourDiagram" width="600">
+</div>
+<div class="title">Figure 2. Set Colour Implementation Diagram</div>
 </div>
 <div class="ulist">
 <ul>
@@ -260,4 +269,4 @@ increased.</p>
 </div>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-12 13:22:35 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-12 13:53:19 UTC</div></div></div></body></html>
