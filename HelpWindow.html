@@ -36,6 +36,7 @@
 <li><a href="#pressure_groups">4. About Pressure Groups and calculation in recreational diving</a></li>
 <li><a href="#definitions_review">5. Dive Tables Definitions Review</a></li>
 <li><a href="#FAQ">6. FAQ</a></li>
+<li><a href="#command-summary">7. Command Summary</a></li>
 </ul>
 </div>
 </div>
@@ -97,9 +98,15 @@ e.g. typing <strong><code>help</code></strong> and pressing <kbd>Enter</kbd> wil
 <div class="paragraph">
 <p> <details><summary> 
 Click to view screenshot for location of command box
- </summary><div> 
-image::UGSS_Ui_command.png[width="800"]
-Diagram 2: Command Box location
+ </summary><div> </p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/UGSS_Ui_command.png" alt="UGSS Ui command" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>Diagram 2: Command Box location
  </div></details> </p>
 </div>
 </div>
@@ -247,7 +254,7 @@ the program will not be able to add your dive.
 </table>
 </div>
 <div class="paragraph">
-<p>Put a <code>ts/</code> before the time started(24 hours format - HHMM), te/time ended (24 hours format - HHMM), d/depth (in metres), l/ location (location name), per dive at v1.0) (optional) and pg/initial pressure group.</p>
+<p>Put a <code>ts/</code> before the time started(24 hours format - HHMM), te/time ended (24 hours format - HHMM), d/depth (in metres), l/ location (location name).</p>
 </div>
 <div class="paragraph">
 <p><em>Example:</em> <code>add ds/04082018 ts/0900 de/04082018 te/1020 ss/1015 d/15 l/Bukit Lagoon tz/+8</code></p>
@@ -392,7 +399,7 @@ Click here to see the screenshot for list
 The only parameters you have to input are the data of that specific dive session at <code>INDEX</code></p>
 </div>
 <div class="paragraph">
-<p>Format: <code>edit INDEX [ts/TIME_START] [te/TIME_END] [ss/SAFETY_STOP_TIME] [d/DEPTH] [pg/PG_AT_START] [l/LOCATION]&#8230;&#8203;</code></p>
+<p>Format: <code>edit INDEX [ts/TIME_START] [te/TIME_END] [ss/SAFETY_STOP_TIME] [d/DEPTH] [l/LOCATION]&#8230;&#8203;</code></p>
 </div>
 <div class="sidebarblock">
 <div class="content">
@@ -413,7 +420,7 @@ The only parameters you have to input are the data of that specific dive session
 </div>
 <div class="paragraph">
 <p>Examples:
-<code>edit 1 pge/F l/Tioman</code></p>
+<code>edit 1 l/Tioman d/10</code></p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -1119,4 +1126,108 @@ The Recreational Dive Planner Table is actually three tables linked together. Ea
 <strong>A</strong>: The 36-page long Instructions for Use official document can be found at <a href="https://elearning.padi.com/company0/tools/RDP%20InsforUseMet.pdf">Padi&#8217;s Website</a>.</p>
 </div>
 </div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-12 03:00:38 UTC</div></div></div></body></html>
+</div>
+<div class="sect1">
+<h2 id="command-summary"><a class="link" href="#command-summary">7. Command Summary</a></h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Command</th>
+<th class="tableblock halign-left valign-top">Command format and example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Help</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>help</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Add</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>add ds/DATE_STARTED ts/TIME_DIVE_STARTED de/DATE_ENDED te/TIME_DIVE_ENDED ss/SAFETY_STOP d/DEPTH l/LOCATION</code>
+<br>
+<br>
+ e.g. <code>add ds/04082018 ts/0900 de/04082018 te/1020 ss/1015 d/15 l/Bukit Lagoon tz/+8</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">List</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>list</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Edit</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>edit INDEX [ds/DATE_STARTED] [ts/TIME_DIVE_STARTED] [de/DATE_ENDED] [te/TIME_DIVE_ENDED] [ss/SAFETY_STOP] [d/DEPTH] [l/LOCATION]</code>
+<br>
+<br>
+ e.g. <code>edit 1 d/8 l/Tioman</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Set display units</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>set_units</code>
+<br>
+<br>
+ e.g. <code>set_units meters</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Find</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>find KEYWORD [MORE_KEYWORDS]</code>
+<br>
+<br>
+ e.g.  <code>find Bali</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Delete</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>delete INDEX</code>
+<br>
+<br>
+ e.g. <code>delete 2</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Select</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>select INDEX</code>
+<br>
+<br>
+ e.g. <code>select 2</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">History</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>history</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Undo</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>undo</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Redo</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>redo</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Clear</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>clear</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Current Pressure Group</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>currentpg</code>
+<br>
+<br>
+ Alias: <code>cpg</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Planning mode</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>newplan</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Normal mode</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>normalmode</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Port planning mode to normal mode</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>portover</code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-12 03:40:36 UTC</div></div></div></body></html>
