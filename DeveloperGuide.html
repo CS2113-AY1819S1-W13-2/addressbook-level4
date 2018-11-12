@@ -84,8 +84,6 @@
 <li><a href="#a-few-things-to-note-about-dives">G.2. A few things to note about dives</a></li>
 <li><a href="#deleting-a-divesession">G.3. Deleting a diveSession</a></li>
 <li><a href="#saving-data">G.4. Saving data</a></li>
-<li><a href="#new-parameters-in-divesession">G.5. New Parameters in DiveSession</a></li>
-<li><a href="#automatic-calculation-of-pressure-group">G.6. Automatic Calculation of Pressure Group</a></li>
 </ul>
 </li>
 </ul>
@@ -1854,47 +1852,61 @@ b. Require developers to download those libraries manually (this creates extra w
 <div class="paragraph">
 <p>Priorities: High (must have) - <code>* * *</code>, Medium (nice to have) - <code>* *</code>, Low (unlikely to have) - <code>*</code>, Null (Not Implementing) - <code>-</code></p>
 </div>
-<div class="paragraph">
-<div class="title">List of user stories</div>
-<p>|===// tag::dataencryption[]
-|Priority |As a&#8230;&#8203; |I want to&#8230;&#8203; | So that I can&#8230;&#8203;</p>
-</div>
-<div class="paragraph">
-<p>|<code>* * *</code>
-|Diver
-|Know my current pressure group
-|Plan my next dive safely</p>
-</div>
-<div class="paragraph">
-<p>|<code>* * *</code>
-|Diver
-|Add dive entries
-|So that I can know my pressure group.</p>
-</div>
-<div class="paragraph">
-<p>|<code>**</code>
-|Diver
-|Be able to enter data in local time
-|Save time when calculating my pressure groups.</p>
-</div>
-<div class="paragraph">
-<p>|<code>**</code>
-|Diver
-|Plan my dives ahead of performing them
-|So that I know what a safe limit is.</p>
-</div>
-<div class="paragraph">
-<p>|<code>*</code>
-|Diver
-|to see where I have been
-|Reminisce</p>
-</div>
-<div class="paragraph">
-<p>|<code>-</code>
-|Dive master
-|Check my dive buddy’s logs
-|Make sure all of us have a safe trip</p>
-</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 3. List of user stories</caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Priority</th>
+<th class="tableblock halign-left valign-top">As a&#8230;&#8203;</th>
+<th class="tableblock halign-left valign-top">I want to&#8230;&#8203;</th>
+<th class="tableblock halign-left valign-top">So that I can&#8230;&#8203;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* * *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Diver</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Know my current pressure group</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Plan my next dive safely</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* * *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Diver</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Add dive entries</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">So that I can know my pressure group.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>**</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Diver</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Be able to enter data in local time</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Save time when calculating my pressure groups.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>**</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Diver</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Plan my dives ahead of performing them</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">So that I know what a safe limit is.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>*</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Diver</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">to see where I have been</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reminisce</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>-</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Dive master</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Check my dive buddy’s logs</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Make sure all of us have a safe trip</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div class="sect1">
@@ -2229,7 +2241,7 @@ Expected: Shows the GUI with a set of sample dives. The window size may not be o
 <h3 id="a-few-things-to-note-about-dives"><a class="link" href="#a-few-things-to-note-about-dives">G.2. A few things to note about dives</a></h3>
 <div class="paragraph">
 <p>The aim of this app is to make nitrogen level calculations of a diver very natural. As such testing the app requires
-certain understanding about dives. The [user guide] outlines the conditions under which dives may be
+certain understanding about dives. The <a href="https://github.com/CS2113-AY1819S1-W13-2/main/blob/master/docs/UserGuide.adoc">user guide</a> outlines the conditions under which dives may be
 rejected from being added to the system.</p>
 </div>
 </div>
@@ -2274,7 +2286,7 @@ Expected: Similar to previous.</p>
 <p>Data is stored in the <code>data/</code> subdirectory of the current working directory.</p>
 </li>
 <li>
-<p>Corrupted data will cause the application to overwrite the file</p>
+<p>Corrupted data will cause the application to overwrite the file.</p>
 </li>
 </ol>
 </div>
@@ -2282,71 +2294,5 @@ Expected: Similar to previous.</p>
 </ol>
 </div>
 </div>
-<div class="sect2">
-<h3 id="new-parameters-in-divesession"><a class="link" href="#new-parameters-in-divesession">G.5. New Parameters in DiveSession</a></h3>
-<div class="sect3">
-<h4 id="ourdate-date-start-date-end"><a class="link" href="#ourdate-date-start-date-end">G.5.1. ourDate (Date Start/ Date End)</a></h4>
-<div class="paragraph">
-<p>The ourDate Class consist of a String. When using the <code>add</code> or <code>edit</code> feature, the inputs will be parsed and checked to be a 8 digit String, in the format of <em>[DDMMYYYY]</em> through <code>ParserUtils</code>. Only Integers will be accepted.</p>
 </div>
-<div class="paragraph">
-<p>Date Start and Date End will have prefixes <code>ds/</code> and <code>de/</code> respectively, and these prefixes will be used when using the <code>add</code> or <code>edit</code> feature.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="timezone-2"><a class="link" href="#timezone-2">G.5.2. Timezone</a></h4>
-<div class="paragraph">
-<p>The timeZone class consists of a Integer (ranging from -12 to +12). This integer is dependent on the user input, which is the timezone in the format of UTC. If there are no integers in this string, there will be an exception thrown.</p>
-</div>
-<div class="paragraph">
-<p>Timezone will have prefix <code>tz/</code> which will be used when using the <code>add</code> or <code>edit</code> feature.</p>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="automatic-calculation-of-pressure-group"><a class="link" href="#automatic-calculation-of-pressure-group">G.6. Automatic Calculation of Pressure Group</a></h3>
-<div class="paragraph">
-<p>Takes into account the latest (in terms of time) Dive Session. Subtracting the current time from the latest dive, the method will be able to automatically calculate time until the current Pressure group will fall to the next group, which is the time until it is safe to dive again.</p>
-</div>
-<div class="sect3">
-<h4 id="pressure-group"><a class="link" href="#pressure-group">G.6.1. Pressure Group</a></h4>
-<div class="paragraph">
-<p>Pressure group utilises a 3d Array in the form of <code>hashmap&lt;int, hashmap&lt;string, string&gt;&gt;</code>.
-Pressure groups range from A to Z. (i anyhow).</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="compareutils"><a class="link" href="#compareutils">G.6.2. CompareUtils</a></h4>
-<div class="paragraph">
-<p>CompareUtils is a helper method class implemented to assist with the automatic calculations of <code>PressureGroup</code></p>
-</div>
-<div class="paragraph">
-<p>The current methods in this Class include:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>checkTimeDifference()</code>&#8201;&#8212;&#8201;When 2 ourDate Strings and 2 time Strings parameters are passed, the method will return the time difference in number of minutes. This will be used in calculations</p>
-</li>
-<li>
-<p><code>convertTimetoLocal()</code>&#8201;&#8212;&#8201;This method uses the new <code>timeZone</code> parameter in DiveSession to convert any time to local time, based on the timeZone value (in UTC).
-This method returns a long type of length 12, in the format of <em>[DDMMYYYYHHMM]</em>.</p>
-</li>
-<li>
-<p><code>getCurrentDateTime()</code>&#8201;&#8212;&#8201;This method returns the current time in <code>Date</code> format</p>
-</li>
-<li>
-<p><code>getCurrentDateTimeLong()</code>&#8201;&#8212;&#8201;This method returns the current time in <code>long</code> format, in <em>[DDMMYYYYHHMM]</em></p>
-</li>
-<li>
-<p><code>readTimeFromLong</code>&#8201;&#8212;&#8201;This method</p>
-</li>
-<li>
-<p><code>readDateFromLong()</code>&#8201;&#8212;&#8201;This method</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-</div>
-</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-12 03:40:36 UTC</div></div></div></body></html>
+</div></div><div id="footer"><div class="container"><div id="footer-text">Last updated 2018-11-12 06:35:46 UTC</div></div></div></body></html>
